@@ -30,6 +30,8 @@
     <string name="form_last_name1"> Apellido paterno </string>
     <string name="form_last_name2"> Apellido materno </string>
     <string name="form_ci"> C.I. </string>
-
+    <string name="form_country"> Pais </string>
+    <string name="form_genre"> Género </string>
+    <string name="form_user_type"> Tipo de usuario </string>
     <string name="form_register_button"> Registrar </string>
 </resources>

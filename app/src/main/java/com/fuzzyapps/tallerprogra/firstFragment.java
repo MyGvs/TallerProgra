@@ -40,6 +40,8 @@ public class firstFragment extends Fragment {
 
     // Spinner arrays
     private ArrayList<String> arraySpinnerCountry;
+    private ArrayList<String> arraySpinnerGenre;
+    private ArrayList<String> arraySpinnerUserType;
 
     public firstFragment() {
         // Required empty public constructor
@@ -66,13 +68,17 @@ public class firstFragment extends Fragment {
         genre = (Spinner) view.findViewById(R.id.genre);
         userType = (Spinner) view.findViewById(R.id.userType);
 
+        // INICIALIZACION DE ARRAYS
+        this.arraySpinnerCountry = new ArrayList<String>();
+        this.arraySpinnerGenre = new ArrayList<String>();
+        this.arraySpinnerUserType = new ArrayList<String>();
+
         //EJEMPLO PARA AGREGAR UN PAIS
         /*sqlite.addPais("Bolivia");
         sqlite.addPais("Chile");
         sqlite.addPais("Bangladesh");*/
-        //EJEMPLO PARA LISTAR LOS PAISES
-        this.arraySpinnerCountry = new ArrayList<String>();
-        int i = 0;
+
+        // CARGAR PAISES
         try {
             Cursor cursor = sqlite.getAllPais();
             if( cursor.moveToFirst() ) {
@@ -89,9 +95,61 @@ public class firstFragment extends Fragment {
         }catch (Exception e){
             Log.e("ERROR", e.getMessage());
         }
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+        ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, arraySpinnerCountry);
-        country.setAdapter(adapter);
+        country.setAdapter(countryAdapter);
+
+        //EJEMPLO PARA AGREGAR UN GENERO
+        /*sqlite.addGenre("Masculino");
+        sqlite.addGenre("Femenino");*/
+
+        // CARGAR GENEROS
+        try {
+            Cursor cursor = sqlite.getAllGenre();
+            if( cursor.moveToFirst() ) {
+                do {
+                    // 0: idpais, 1: pais
+                    //el numero debe ser correlativo a lo que usieron en el SELECT del query
+                    //si es entero usan  cursor.getInt()
+                    // si es varchar usan
+                    //en este caso el id es el sub 0 y es un int y el pais es un varchar uso el getString()
+                    Toast.makeText(getActivity(),cursor.getInt(0)+" - "+cursor.getString(1),Toast.LENGTH_SHORT).show();
+                    this.arraySpinnerGenre.add(cursor.getInt(0)+"."+cursor.getString(1));
+                } while ( cursor.moveToNext() );
+            }
+        }catch (Exception e){
+            Log.e("ERROR", e.getMessage());
+        }
+        ArrayAdapter<String> genreAdapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, arraySpinnerGenre);
+        genre.setAdapter(genreAdapter);
+
+        //EJEMPLO PARA AGREGAR UN TIPO
+        /*sqlite.addUserType("Jugador");
+        sqlite.addUserType("Arbitro");
+        sqlite.addUserType("Administrador");*/
+
+        // CARGAR TIPOS DE USUARIO
+        try {
+            Cursor cursor = sqlite.getAllUserType();
+            if( cursor.moveToFirst() ) {
+                do {
+                    // 0: idpais, 1: pais
+                    //el numero debe ser correlativo a lo que usieron en el SELECT del query
+                    //si es entero usan  cursor.getInt()
+                    // si es varchar usan
+                    //en este caso el id es el sub 0 y es un int y el pais es un varchar uso el getString()
+                    Toast.makeText(getActivity(),cursor.getInt(0)+" - "+cursor.getString(1),Toast.LENGTH_SHORT).show();
+                    this.arraySpinnerUserType.add(cursor.getInt(0)+"."+cursor.getString(1));
+                } while ( cursor.moveToNext() );
+            }
+        }catch (Exception e){
+            Log.e("ERROR", e.getMessage());
+        }
+        ArrayAdapter<String> userTypeAdapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, arraySpinnerUserType);
+        userType.setAdapter(userTypeAdapter);
+
         sqlite.cerrar();
     }
 
