@@ -64,24 +64,16 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="@string/action_sign_in"
-                android:textStyle="bold" />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:minWidth="88dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
-                android:text="Button"
+                android:text="@string/action_sign_in"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/buscarObra"
                 android:textColor="@color/textButtons"
                 android:theme="@style/MaterialButton"
-                android:layout_below="@+id/filtro"
-                android:layout_centerHorizontal="true"/>
+                android:textStyle="bold"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

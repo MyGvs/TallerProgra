@@ -67,7 +67,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        sqlite= new SQLite(this);
+        sqlite = new SQLite(this);
         sqlite.abrir();
         //EJEMPLO PARA AGREGAR UN PAIS
         /*sqlite.addPais("Bolivia");
