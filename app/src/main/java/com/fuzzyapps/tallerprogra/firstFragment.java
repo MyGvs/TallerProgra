@@ -1,12 +1,15 @@
 package com.fuzzyapps.tallerprogra;
 
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
+import android.widget.TextView;
 
 
 /**
@@ -14,12 +17,9 @@ import android.view.ViewGroup;
  */
 public class firstFragment extends Fragment {
 
-
     public firstFragment() {
         // Required empty public constructor
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment

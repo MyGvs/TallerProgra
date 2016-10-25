@@ -22,4 +22,14 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Hints para formulario de crear jugador -->
+    <string name="form_user"> Usuario </string>
+    <string name="form_password"> Clave </string>
+    <string name="form_name"> Nombre </string>
+    <string name="form_last_name1"> Apellido paterno </string>
+    <string name="form_last_name2"> Apellido materno </string>
+    <string name="form_ci"> C.I. </string>
+
+    <string name="form_register_button"> Registrar </string>
 </resources>
