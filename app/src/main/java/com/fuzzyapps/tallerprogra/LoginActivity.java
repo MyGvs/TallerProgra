@@ -69,7 +69,9 @@ public class LoginActivity extends AppCompatActivity {
         sqlite= new SQLite(this);
         sqlite.abrir();
         //EJEMPLO PARA AGREGAR UN PAIS
-        //sqlite.addPais("Bangladesh");
+        /*sqlite.addPais("Bolivia");
+        sqlite.addPais("Chile");
+        sqlite.addPais("Bangladesh");*/
         //EJEMPLO PARA LISTAR LOS PAISES
         try {
             Cursor cursor = sqlite.getAllPais();

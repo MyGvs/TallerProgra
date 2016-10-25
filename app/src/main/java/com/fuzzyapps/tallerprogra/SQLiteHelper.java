@@ -71,6 +71,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             "`genero_idgenero` INTEGER NOT NULL, " +
             "`pais_idpais` INTEGER NOT NULL, " +
             "`tipo_persona_idTipoPersona` INTEGER NOT NULL, " +
+            "`usuario` VARCHAR(45), " +
+            "`clave` VARCHAR(100), " +
             "FOREIGN KEY (`genero_idgenero` ) REFERENCES `genero` (`idgenero` ) ON DELETE NO ACTION ON UPDATE NO ACTION, " +
             "FOREIGN KEY (`pais_idpais` ) REFERENCES `pais` (`idpais` ) ON DELETE NO ACTION ON UPDATE NO ACTION, " +
             "FOREIGN KEY (`tipo_persona_idTipoPersona` ) REFERENCES `tipo_persona` (`idTipoPersona` ) ON DELETE NO ACTION ON UPDATE NO ACTION )";
