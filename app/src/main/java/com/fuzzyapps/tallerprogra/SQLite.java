@@ -134,4 +134,18 @@ public class SQLite {
             return false;
         }
     }
+    // Grand Slam
+    public boolean addGrandSlam(String grand){
+        //se comprueba que el largo de la variable "Año" es mayor a 0
+        if( grand.length()> 0 ){
+            ContentValues contentValues = new ContentValues();
+            contentValues.put( "Año", grand);
+            Log.e("SQLite", "Nuevo Año " );
+            return ( db.insert( sqliteHelper.name_table_grandSlam , null, contentValues ) != -1 )?true:false;
+        }
+        else {
+            return false;
+        }
+    }
+
 }
