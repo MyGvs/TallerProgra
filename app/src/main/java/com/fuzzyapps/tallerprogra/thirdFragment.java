@@ -40,11 +40,14 @@ public class thirdFragment extends Fragment {
         //AQUI INICIALIZAR LOS OBJETOS
         year = (EditText) view.findViewById(R.id.year);
         crear = (Button) view.findViewById(R.id.createGs);
+
+
         crear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                Toast.makeText(getActivity(), "Torneo creado", Toast.LENGTH_SHORT).show();
+                //Variable del año en String
+                String anio = year.getText().toString();
+                Toast.makeText(getActivity(), "Torneo creado "+anio, Toast.LENGTH_SHORT).show();
             }
         });
 
