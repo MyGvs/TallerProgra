@@ -157,7 +157,7 @@ public class firstFragment extends Fragment {
         ArrayAdapter<String> userTypeAdapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, arraySpinnerUserType);
         userType.setAdapter(userTypeAdapter);
-
+        sqlite.cerrar();
         // Crear evento onClick de registrar
         registerButton.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -172,13 +172,13 @@ public class firstFragment extends Fragment {
                 String formCountry = country.getSelectedItem().toString();
                 String formGenre = genre.getSelectedItem().toString();
                 String formType = userType.getSelectedItem().toString();
-                persona.addPlayer(sqlite.getDb(),sqlite.getSqliteHelper(), formUser, formPass, formName, formLastName1, formLastName2, formCI, formCountry, formGenre, formType);
+                sqlite.abrir();
+                sqlite.addPlayer(formUser, formPass, formName, formLastName1, formLastName2, formCI, formCountry, formGenre, formType);
+                sqlite.cerrar();
                 //Toast.makeText(getActivity(),formUser+" - "+formPass+" - "+formName+" - "+formLastName1+" - "+formLastName2+" - "+formCI+" - "+formCountry+" - "+formGenre+" - "+formType,Toast.LENGTH_SHORT).show();
-
 
             }
         });
-        sqlite.cerrar();
     }
 
 }
