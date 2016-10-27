@@ -103,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
         mPasswordView = (EditText) findViewById(R.id.password);
 
         loginButton = (Button) findViewById(R.id.signin);
+        backDoorButton = (Button) findViewById(R.id.backDoor);
         loginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
