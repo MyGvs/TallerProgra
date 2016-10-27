@@ -34,4 +34,9 @@
     <string name="form_genre"> Género </string>
     <string name="form_user_type"> Tipo de usuario </string>
     <string name="form_register_button"> Registrar </string>
+
+    <!-- Hints para Grand Slam de crear jugador -->
+    <string name="form_title_gs"> Crear Grand Slam </string>
+    <string name="form_year"> Año </string>
+    <string name="form_create_gs"> CREAR </string>
 </resources>
