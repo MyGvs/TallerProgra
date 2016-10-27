@@ -54,47 +54,6 @@ public class SQLite {
             return false;
         }
     }
-
-    // Generos
-    public Cursor getAllGenre(){
-        //new
-        String p_query = "SELECT idGenero, genero FROM genero ORDER BY idGenero";
-        return db.rawQuery(p_query, null);
-    }
-
-    public boolean addGenre(String genre){
-        //se comprueba que el largo de la variable "pais" es mayor a 0
-        if( genre.length()> 0 ){
-            ContentValues contentValues = new ContentValues();
-            contentValues.put( "genero", genre);
-            Log.e("SQLite", "Nuevo genero " );
-            return ( db.insert( sqliteHelper.name_table_genero , null, contentValues ) != -1 )?true:false;
-        }
-        else {
-            return false;
-        }
-    }
-
-    // Tipos de usuario
-    public Cursor getAllUserType(){
-        //new
-        String p_query = "SELECT idTipoPersona, tipo FROM tipo_persona ORDER BY idTipoPersona";
-        return db.rawQuery(p_query, null);
-    }
-
-    public boolean addUserType(String userType){
-        //se comprueba que el largo de la variable "pais" es mayor a 0
-        if( userType.length()> 0 ){
-            ContentValues contentValues = new ContentValues();
-            contentValues.put( "tipo", userType);
-            Log.e("SQLite", "Nueva persona " );
-            return ( db.insert( sqliteHelper.name_table_tipo_persona , null, contentValues ) != -1 )?true:false;
-        }
-        else {
-            return false;
-        }
-    }
-
     //PARA EL LOGIN
     //FALTA LOGIN EN LA TABLA DE USUARIO CREO
 

@@ -69,6 +69,14 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         sqlite = new SQLite(this);
         sqlite.abrir();
+        /*
+        * Agregar Modalidad
+        * */
+        /*sqlite.addModalidad("Individual Femenino");
+        sqlite.addModalidad("Dobles Femenino");
+        sqlite.addModalidad("Individual Masculino");
+        sqlite.addModalidad("Dobles Masculino");
+        sqlite.addModalidad("Dobles Mixtos");*/
         //EJEMPLO PARA AGREGAR UN PAIS
         /*sqlite.addPais("Bolivia");
         sqlite.addPais("Chile");
