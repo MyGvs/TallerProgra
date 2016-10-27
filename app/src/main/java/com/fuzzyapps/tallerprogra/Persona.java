@@ -2,6 +2,7 @@ package com.fuzzyapps.tallerprogra;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -41,5 +42,11 @@ public class Persona {
             return false;
         }
         return true;
+    }
+
+    // Login
+    public Cursor Login(SQLiteDatabase db, String user, String pass){
+        String p_query = "SELECT usuario, clave FROM persona where usuario='"+user+"' and clave='"+pass+"'";
+        return db.rawQuery(p_query, null);
     }
 }
