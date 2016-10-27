@@ -88,12 +88,13 @@ public class SQLite {
             ContentValues contentValues = new ContentValues();
             contentValues.put( "tipo", userType);
             Log.e("SQLite", "Nueva persona " );
-            return ( db.insert( sqliteHelper.name_table_persona , null, contentValues ) != -1 )?true:false;
+            return ( db.insert( sqliteHelper.name_table_tipo_persona , null, contentValues ) != -1 )?true:false;
         }
         else {
             return false;
         }
     }
+
     //PARA EL LOGIN
     //FALTA LOGIN EN LA TABLA DE USUARIO CREO
 

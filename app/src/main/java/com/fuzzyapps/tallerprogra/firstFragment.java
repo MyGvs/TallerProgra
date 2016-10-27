@@ -93,7 +93,7 @@ public class firstFragment extends Fragment {
                     //si es entero usan  cursor.getInt()
                     // si es varchar usan
                     //en este caso el id es el sub 0 y es un int y el pais es un varchar uso el getString()
-                    Toast.makeText(getActivity(),cursor.getInt(0)+" - "+cursor.getString(1),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(),cursor.getInt(0)+" - "+cursor.getString(1),Toast.LENGTH_SHORT).show();
                     this.arraySpinnerCountry.add(cursor.getInt(0)+"."+cursor.getString(1));
                 } while ( cursor.moveToNext() );
             }
@@ -118,7 +118,7 @@ public class firstFragment extends Fragment {
                     //si es entero usan  cursor.getInt()
                     // si es varchar usan
                     //en este caso el id es el sub 0 y es un int y el pais es un varchar uso el getString()
-                    Toast.makeText(getActivity(),cursor.getInt(0)+" - "+cursor.getString(1),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(),cursor.getInt(0)+" - "+cursor.getString(1),Toast.LENGTH_SHORT).show();
                     this.arraySpinnerGenre.add(cursor.getInt(0)+"."+cursor.getString(1));
                 } while ( cursor.moveToNext() );
             }
@@ -144,7 +144,7 @@ public class firstFragment extends Fragment {
                     //si es entero usan  cursor.getInt()
                     // si es varchar usan
                     //en este caso el id es el sub 0 y es un int y el pais es un varchar uso el getString()
-                    Toast.makeText(getActivity(),cursor.getInt(0)+" - "+cursor.getString(1),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(),cursor.getInt(0)+" - "+cursor.getString(1),Toast.LENGTH_SHORT).show();
                     this.arraySpinnerUserType.add(cursor.getInt(0)+"."+cursor.getString(1));
                 } while ( cursor.moveToNext() );
             }
@@ -160,7 +160,15 @@ public class firstFragment extends Fragment {
             @Override
             public void onClick(View v){
                 // Registro de jugador
+                String formUser = user.getText().toString();
+                String formPass = password.getText().toString();
+                String formName = name.getText().toString();
+                String formLastName1 = last_name1.getText().toString();
+                String formLastName2 = last_name2.getText().toString();
+                String formCI = ci.getText().toString();
+                String formCountry = country.getSelectedItem().toString();
 
+                //Toast.makeText(getActivity(),user.getText().toString(),Toast.LENGTH_SHORT).show();
             }
         });
         sqlite.cerrar();
