@@ -66,11 +66,11 @@ public class firstFragment extends Fragment {
 
         //AQUI INICIALIZAR LOS OBJETOS
         user = (EditText) view.findViewById(R.id.user);
-        password = (EditText) view.findViewById(R.id.user);
-        name = (EditText) view.findViewById(R.id.user);
-        last_name1 = (EditText) view.findViewById(R.id.user);
-        last_name2 = (EditText) view.findViewById(R.id.user);
-        ci = (EditText) view.findViewById(R.id.user);
+        password = (EditText) view.findViewById(R.id.password);
+        name = (EditText) view.findViewById(R.id.name);
+        last_name1 = (EditText) view.findViewById(R.id.last_name1);
+        last_name2 = (EditText) view.findViewById(R.id.last_name2);
+        ci = (EditText) view.findViewById(R.id.ci);
         country = (Spinner) view.findViewById(R.id.country);
         genre = (Spinner) view.findViewById(R.id.genre);
         userType = (Spinner) view.findViewById(R.id.userType);
@@ -173,7 +173,9 @@ public class firstFragment extends Fragment {
                 String formGenre = genre.getSelectedItem().toString();
                 String formType = userType.getSelectedItem().toString();
                 persona.addPlayer(sqlite.getDb(),sqlite.getSqliteHelper(), formUser, formPass, formName, formLastName1, formLastName2, formCI, formCountry, formGenre, formType);
-                //Toast.makeText(getActivity(),user.getText().toString(),Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity(),formUser+" - "+formPass+" - "+formName+" - "+formLastName1+" - "+formLastName2+" - "+formCI+" - "+formCountry+" - "+formGenre+" - "+formType,Toast.LENGTH_SHORT).show();
+
+
             }
         });
         sqlite.cerrar();
