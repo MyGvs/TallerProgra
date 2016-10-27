@@ -176,7 +176,6 @@ public class firstFragment extends Fragment {
                 sqlite.addPlayer(formUser, formPass, formName, formLastName1, formLastName2, formCI, formCountry, formGenre, formType);
                 sqlite.cerrar();
                 //Toast.makeText(getActivity(),formUser+" - "+formPass+" - "+formName+" - "+formLastName1+" - "+formLastName2+" - "+formCI+" - "+formCountry+" - "+formGenre+" - "+formType,Toast.LENGTH_SHORT).show();
-
             }
         });
     }
