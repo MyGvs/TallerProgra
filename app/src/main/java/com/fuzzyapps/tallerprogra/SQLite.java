@@ -58,11 +58,15 @@ public class SQLite {
     //PARA EL LOGIN
     //FALTA LOGIN EN LA TABLA DE USUARIO CREO
     public Cursor getAllPersonaMasculino(){
-        String p_query = "SELECT idpais, pais FROM pais ORDER BY idpais";
+        String p_query = "SELECT idjugador, nombre, apellido, fecha_nacimiento, ci, b.genero, c.tipo FROM persona a, genero b, tipo_persona c WHERE a.genero_idgenero = b.idgenero AND a.tipo_persona_idTipoPersona = c.idTipoPersona AND c.tipo = 'Masculino' ORDER BY idjugador";
         return db.rawQuery(p_query, null);
     }
     public Cursor getAllPersonaFemenino(){
-        String p_query = "SELECT idpais, pais FROM pais ORDER BY idpais";
+        String p_query = "SELECT idjugador, nombre, apellido, fecha_nacimiento, ci, b.genero, c.tipo FROM persona a, genero b, tipo_persona c WHERE a.genero_idgenero = b.idgenero AND a.tipo_persona_idTipoPersona = c.idTipoPersona AND c.tipo = 'Femenino' ORDER BY idjugador";
+        return db.rawQuery(p_query, null);
+    }
+    public Cursor getAllPersona(){
+        String p_query = "SELECT idjugador, nombre, apellido, fecha_nacimiento, ci, b.genero, c.tipo FROM persona a, genero b, tipo_persona c WHERE a.genero_idgenero = b.idgenero AND a.tipo_persona_idTipoPersona = c.idTipoPersona ORDER BY idjugador";
         return db.rawQuery(p_query, null);
     }
     public boolean addModalidad(String modalidad){
