@@ -39,4 +39,13 @@
     <string name="form_title_gs"> Crear Grand Slam </string>
     <string name="form_year"> Año </string>
     <string name="form_create_gs"> CREAR </string>
+    <!-- Hints para registrar  Partido -->
+    <string name="form_title_match"> Registrar Partido</string>
+    <string name="form_team_a"> Grupo A </string>
+    <string name="form_team_b"> Grupo B </string>
+    <string name="form_result_a"> Resultado A </string>
+    <string name="form_result_b"> Resultado B </string>
+    <string name="form_place"> Lugar de encuentro </string>
+    <string name="form_team_referee"> Grupo Arbitros </string>
+    <string name="form_modality"> Modalidad </string>
 </resources>
