@@ -73,6 +73,25 @@ public class secondFragment extends Fragment {
     private void desplegarDialogoIndividualFemenino() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("CREAR EQUIPO INDIVIDUAL FEMENINO");
+        View view = layoutInflater.inflate(R.layout.item_registro_individual, null);
+        Button register = (Button) view.findViewById(R.id.register);
+        Spinner integranteA = (Spinner) view.findViewById(R.id.integranteA);
+        final EditText teamName = (EditText) view.findViewById(R.id.teamName);
+        //agregar a los spinners las perosnas
+        builder.setView(view);
+        final AlertDialog alert = builder.create();
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!teamName.getText().toString().equals("")){
+                    SQLite sqlite = new SQLite(getActivity());
+                }else{
+                    Toast.makeText(getActivity(), "Debe ingresar un nombre de equipo.",Toast.LENGTH_SHORT).show();
+                }
+                alert.cancel();
+            }
+        });
+        alert.show();
     }
     private void desplegarDialogoDoblesFemenino() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -99,6 +118,27 @@ public class secondFragment extends Fragment {
         alert.show();
     }
     private void desplegarDialogoIndividualMasculino() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("CREAR EQUIPO INDIVIDUAL MASCULINO");
+        View view = layoutInflater.inflate(R.layout.item_registro_individual, null);
+        Button register = (Button) view.findViewById(R.id.register);
+        Spinner integranteA = (Spinner) view.findViewById(R.id.integranteA);
+        final EditText teamName = (EditText) view.findViewById(R.id.teamName);
+        //agregar a los spinners las perosnas
+        builder.setView(view);
+        final AlertDialog alert = builder.create();
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!teamName.getText().toString().equals("")){
+
+                }else{
+                    Toast.makeText(getActivity(), "Debe ingresar un nombre de equipo.",Toast.LENGTH_SHORT).show();
+                }
+                alert.cancel();
+            }
+        });
+        alert.show();
     }
     private void desplegarDialogoDoblesMasculino() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

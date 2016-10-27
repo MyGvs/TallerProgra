@@ -37,6 +37,14 @@ public class SQLite {
         String p_query = "SELECT idpais, pais FROM pais ORDER BY idpais";
         return db.rawQuery(p_query, null);
     }
+    public Cursor getAllPersonaMasculino(){
+        String p_query = "SELECT idpais, pais FROM pais ORDER BY idpais";
+        return db.rawQuery(p_query, null);
+    }
+    public Cursor getAllPersonaFemenino(){
+        String p_query = "SELECT idpais, pais FROM pais ORDER BY idpais";
+        return db.rawQuery(p_query, null);
+    }
     //EJEMPLO DE AGREGAR REGISTRO
     //EL NOMBRE DE LATABLA LA JALAN DE LA CLAS SQLiteHelper
     //SI SE HACE EL REGISTRO RETORNA TRUE
@@ -53,6 +61,23 @@ public class SQLite {
         else {
             return false;
         }
+    }
+    public boolean addModalidad(String modalidad){
+        if( modalidad.length()> 0 ){
+            ContentValues contentValues = new ContentValues();
+            contentValues.put( "modalidad", modalidad);
+            Log.e("SQLite", "Nueva Modalidad" );
+            return ( db.insert( sqliteHelper.name_table_modalidad , null, contentValues ) != -1 )?true:false;
+        }
+        else {
+            return false;
+        }
+    }
+    public boolean addIndividualFemenino(Equipo equipo){
+        ContentValues contentValues = new ContentValues();
+        //contentValues.put( "modalidad", modalidad);
+        Log.e("SQLite", "Nueva Modalidad" );
+        return ( db.insert( sqliteHelper.name_table_modalidad , null, contentValues ) != -1 )?true:false;
     }
     //PARA EL LOGIN
     //FALTA LOGIN EN LA TABLA DE USUARIO CREO

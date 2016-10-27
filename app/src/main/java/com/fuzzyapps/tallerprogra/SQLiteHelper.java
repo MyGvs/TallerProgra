@@ -27,6 +27,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public final String name_table_lugarEncuentro = "lugarEncuentro";
     public final String name_table_partido = "partido";
     public final String name_table_premiosTorneo = "premiosTorneo";
+    public final String name_table_entrenador = "entrenador";
     // QUERY PARA LAS TABLAS
     public final String sql_table_pais = "CREATE TABLE "+name_table_pais+"( " +
             "`idpais` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
@@ -119,7 +120,12 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             "`fase` VARCHAR(45), " +
             "`torneoModalidad_idTorneoMod` INTEGER NOT NULL, " +
             "FOREIGN KEY (`torneoModalidad_idTorneoMod` ) REFERENCES `torneoModalidad` (`idTorneoMod` ) ON DELETE NO ACTION ON UPDATE NO ACTION )";
-
+    public final String sql_table_entrenador = "CREATE TABLE "+name_table_entrenador+"( " +
+            "`id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, " +
+            "`persona_idjugador` INTEGER NOT NULL, " +
+            "`grupo_idgrupo` INTEGER NOT NULL, " +
+            "FOREIGN KEY (`persona_idjugador` ) REFERENCES `persona` (`idjugador` ) ON DELETE NO ACTION ON UPDATE NO ACTION, "+
+            "FOREIGN KEY (`grupo_idgrupo` ) REFERENCES `grupo` (`idgrupo` ) ON DELETE NO ACTION ON UPDATE NO ACTION )";
 
     public SQLiteHelper(Context context) {
         super( context, __DATABASE, null, __VERSION );
@@ -147,6 +153,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(sql_table_lugarEncuentro);
         db.execSQL(sql_table_partido);
         db.execSQL(sql_table_premiosTorneo);
+        db.execSQL(sql_table_entrenador);
     }
 
     @Override
@@ -170,6 +177,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             db.execSQL( "DROP TABLE IF EXISTS " + sql_table_lugarEncuentro);
             db.execSQL( "DROP TABLE IF EXISTS " + sql_table_partido);
             db.execSQL( "DROP TABLE IF EXISTS " + sql_table_premiosTorneo);
+            db.execSQL( "DROP TABLE IF EXISTS " + sql_table_entrenador);
 			//y luego creamos la nueva tabla
 
 			db.execSQL(sql_table_pais);
@@ -188,6 +196,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             db.execSQL(sql_table_lugarEncuentro);
             db.execSQL(sql_table_partido);
             db.execSQL(sql_table_premiosTorneo);
+            db.execSQL(sql_table_entrenador);
         }
     }
 
