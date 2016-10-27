@@ -60,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mUserView;
     private EditText mPasswordView;
     private Button loginButton;
+    private Button backDoorButton;
     //SQLite Variables
     private SQLite sqlite;
     @Override
@@ -111,6 +112,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        backDoorButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(LoginActivity.this, activityNavigation.class);
+                startActivity(i);
+            }
+        });
     }
     /**
      * Attempts to sign in or register the account specified by the login form.
