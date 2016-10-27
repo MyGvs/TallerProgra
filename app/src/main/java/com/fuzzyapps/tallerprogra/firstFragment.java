@@ -42,6 +42,9 @@ public class firstFragment extends Fragment {
     // Instancia de SQLite
     private SQLite sqlite;
 
+    // Instancias de Clases
+    private Persona persona;
+
     // Spinner arrays
     private ArrayList<String> arraySpinnerCountry;
     private ArrayList<String> arraySpinnerGenre;
@@ -169,7 +172,7 @@ public class firstFragment extends Fragment {
                 String formCountry = country.getSelectedItem().toString();
                 String formGenre = genre.getSelectedItem().toString();
                 String formType = userType.getSelectedItem().toString();
-
+                persona.addPlayer(sqlite.getDb(),sqlite.getSqliteHelper(), formUser, formPass, formName, formLastName1, formLastName2, formCI, formCountry, formGenre, formType);
                 //Toast.makeText(getActivity(),user.getText().toString(),Toast.LENGTH_SHORT).show();
             }
         });

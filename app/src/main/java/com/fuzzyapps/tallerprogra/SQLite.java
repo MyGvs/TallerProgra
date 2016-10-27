@@ -31,6 +31,15 @@ public class SQLite {
         sqliteHelper.close();
     }
 
+    // Obtener instancia de base de datos
+    public SQLiteDatabase getDb(){
+        return db;
+    }
+
+    // Obtener instancia de sqlite helper
+    public SQLiteHelper getSqliteHelper(){
+        return sqliteHelper;
+    }
     // EJEMPLO DE QUERY
     public Cursor getAllPais(){
         //new
