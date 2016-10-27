@@ -177,7 +177,8 @@
                 android:textColor="@color/textButtons"
                 android:theme="@style/MaterialButton"
                 android:layout_below="@+id/filtro"
-                android:layout_centerHorizontal="true"/>
+                android:layout_centerHorizontal="true"
+                android:elevation="0dp" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

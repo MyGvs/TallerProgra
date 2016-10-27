@@ -31,12 +31,22 @@ public class SQLite {
         sqliteHelper.close();
     }
 
+    // Obtener instancia de base de datos
+    public SQLiteDatabase getDb(){
+        return db;
+    }
+
+    // Obtener instancia de sqlite helper
+    public SQLiteHelper getSqliteHelper(){
+        return sqliteHelper;
+    }
     // EJEMPLO DE QUERY
     public Cursor getAllPais(){
         //new
         String p_query = "SELECT idpais, pais FROM pais ORDER BY idpais";
         return db.rawQuery(p_query, null);
     }
+
     //EJEMPLO DE AGREGAR REGISTRO
     //EL NOMBRE DE LATABLA LA JALAN DE LA CLAS SQLiteHelper
     //SI SE HACE EL REGISTRO RETORNA TRUE
@@ -53,6 +63,36 @@ public class SQLite {
         else {
             return false;
         }
+    }
+    //PARA EL LOGIN
+    //FALTA LOGIN EN LA TABLA DE USUARIO CREO
+    public Cursor getAllPersonaMasculino(){
+        String p_query = "SELECT idjugador, nombre, apellido, fecha_nacimiento, ci, b.genero, c.tipo FROM persona a, genero b, tipo_persona c WHERE a.genero_idgenero = b.idgenero AND a.tipo_persona_idTipoPersona = c.idTipoPersona AND c.tipo = 'Masculino' ORDER BY idjugador";
+        return db.rawQuery(p_query, null);
+    }
+    public Cursor getAllPersonaFemenino(){
+        String p_query = "SELECT idjugador, nombre, apellido, fecha_nacimiento, ci, b.genero, c.tipo FROM persona a, genero b, tipo_persona c WHERE a.genero_idgenero = b.idgenero AND a.tipo_persona_idTipoPersona = c.idTipoPersona AND c.tipo = 'Femenino' ORDER BY idjugador";
+        return db.rawQuery(p_query, null);
+    }
+    public Cursor getAllPersona(){
+        String p_query = "SELECT idjugador, nombre, apellido, fecha_nacimiento, ci, b.genero, c.tipo FROM persona a, genero b, tipo_persona c WHERE a.genero_idgenero = b.idgenero AND a.tipo_persona_idTipoPersona = c.idTipoPersona ORDER BY idjugador";
+        return db.rawQuery(p_query, null);
+    }
+    public boolean addModalidad(String modalidad){
+        if( modalidad.length()> 0 ){
+            ContentValues contentValues = new ContentValues();
+            contentValues.put( "modalidad", modalidad);
+            Log.e("SQLite", "Nueva Modalidad" );
+            return ( db.insert( sqliteHelper.name_table_modalidad , null, contentValues ) != -1 )?true:false;
+        }else {
+            return false;
+        }
+    }
+    public boolean addIndividualFemenino(Equipo equipo){
+        ContentValues contentValues = new ContentValues();
+        //contentValues.put( "modalidad", modalidad);
+        Log.e("SQLite", "Nueva Modalidad" );
+        return ( db.insert( sqliteHelper.name_table_modalidad , null, contentValues ) != -1 )?true:false;
     }
 
     // Generos
@@ -87,14 +127,11 @@ public class SQLite {
         if( userType.length()> 0 ){
             ContentValues contentValues = new ContentValues();
             contentValues.put( "tipo", userType);
-            Log.e("SQLite", "Nuevo tipo de persona " );
-            return ( db.insert( sqliteHelper.name_table_tipo_persona , null, contentValues ) != -1 )?true:false;
+            Log.e("SQLite", "Nueva persona " );
+            return ( db.insert( sqliteHelper.name_table_persona , null, contentValues ) != -1 )?true:false;
         }
         else {
             return false;
         }
     }
-    //PARA EL LOGIN
-    //FALTA LOGIN EN LA TABLA DE USUARIO CREO
-
 }
