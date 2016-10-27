@@ -167,6 +167,8 @@ public class firstFragment extends Fragment {
                 String formLastName2 = last_name2.getText().toString();
                 String formCI = ci.getText().toString();
                 String formCountry = country.getSelectedItem().toString();
+                String formGenre = genre.getSelectedItem().toString();
+                String formType = userType.getSelectedItem().toString();
 
                 //Toast.makeText(getActivity(),user.getText().toString(),Toast.LENGTH_SHORT).show();
             }
