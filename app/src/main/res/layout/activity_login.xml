@@ -33,18 +33,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <EditText
-                    android:id="@+id/email"
+                    android:id="@+id/user"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/prompt_email"
-                    android:inputType="textEmailAddress"
-                    android:maxLines="1"/>
+                    android:hint="@string/prompt_user"
+                    android:maxLines="1"
+                    android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/password">
 
                 <EditText
                     android:id="@+id/password"
@@ -60,8 +61,8 @@
             </android.support.design.widget.TextInputLayout>
 
             <Button
-                android:id="@+id/email_sign_in_button"
-                style="?android:textAppearanceSmall"
+                android:id="@+id/signin"
+                style="@android:style/TextAppearance.Material.Small"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minWidth="88dp"

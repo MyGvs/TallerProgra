@@ -61,6 +61,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private Button loginButton;
     //SQLite Variables
     private SQLite sqlite;
     @Override
@@ -91,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                     //si es entero usan  cursor.getInt()
                     // si es varchar usan
                     //en este caso el id es el sub 0 y es un int y el pais es un varchar uso el getString()
-                    Toast.makeText(this,cursor.getInt(0)+" - "+cursor.getString(1),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(this,cursor.getInt(0)+" - "+cursor.getString(1),Toast.LENGTH_SHORT).show();
                 } while ( cursor.moveToNext() );
             }
         }catch (Exception e){
