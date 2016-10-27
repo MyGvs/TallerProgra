@@ -118,11 +118,27 @@ public class LoginActivity extends AppCompatActivity {
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
+        sqlite.abrir();
         // Store values at the time of the login attempt.
         String user = mUserView.getText().toString();
         String password = mPasswordView.getText().toString();
-
-        Toast.makeText(this, user+" -- "+password,Toast.LENGTH_SHORT).show();
+        Cursor player = sqlite.login(user, password);
+        if(player.getCount() > 0){
+            //Toast.makeText(this, "Exito",Toast.LENGTH_SHORT).show();
+            Intent i = new Intent(LoginActivity.this, activityNavigation.class);
+            startActivity(i);
+        }else{
+            Toast.makeText(this, "Usuario o clave incorrectos.",Toast.LENGTH_SHORT).show();
+        }
+        /*
+        if(sqlite.login(user, password)) {
+            Toast.makeText(this, "Exito",Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "Fracasado",Toast.LENGTH_SHORT).show();
+        }
+        */
+        //Toast.makeText(this, user+" -- "+password,Toast.LENGTH_SHORT).show();
+        sqlite.cerrar();
     }
 }
 
