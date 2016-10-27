@@ -31,6 +31,15 @@ public class SQLite {
         sqliteHelper.close();
     }
 
+    // Obtener instancia de base de datos
+    public SQLiteDatabase getDb(){
+        return db;
+    }
+
+    // Obtener instancia de sqlite helper
+    public SQLiteHelper getSqliteHelper(){
+        return sqliteHelper;
+    }
     // EJEMPLO DE QUERY
     public Cursor getAllPais(){
         //new
@@ -84,5 +93,45 @@ public class SQLite {
         //contentValues.put( "modalidad", modalidad);
         Log.e("SQLite", "Nueva Modalidad" );
         return ( db.insert( sqliteHelper.name_table_modalidad , null, contentValues ) != -1 )?true:false;
+    }
+
+    // Generos
+    public Cursor getAllGenre(){
+        //new
+        String p_query = "SELECT idGenero, genero FROM genero ORDER BY idGenero";
+        return db.rawQuery(p_query, null);
+    }
+
+    public boolean addGenre(String genre){
+        //se comprueba que el largo de la variable "pais" es mayor a 0
+        if( genre.length()> 0 ){
+            ContentValues contentValues = new ContentValues();
+            contentValues.put( "genero", genre);
+            Log.e("SQLite", "Nuevo genero " );
+            return ( db.insert( sqliteHelper.name_table_genero , null, contentValues ) != -1 )?true:false;
+        }
+        else {
+            return false;
+        }
+    }
+
+    // Tipos de usuario
+    public Cursor getAllUserType(){
+        //new
+        String p_query = "SELECT idTipoPersona, tipo FROM tipo_persona ORDER BY idTipoPersona";
+        return db.rawQuery(p_query, null);
+    }
+
+    public boolean addUserType(String userType){
+        //se comprueba que el largo de la variable "pais" es mayor a 0
+        if( userType.length()> 0 ){
+            ContentValues contentValues = new ContentValues();
+            contentValues.put( "tipo", userType);
+            Log.e("SQLite", "Nueva persona " );
+            return ( db.insert( sqliteHelper.name_table_persona , null, contentValues ) != -1 )?true:false;
+        }
+        else {
+            return false;
+        }
     }
 }

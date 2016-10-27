@@ -11,7 +11,7 @@ import android.util.Log;
 
 public class Persona {
 
-    public boolean addPlayer(String user, String pass, String name, String last_name1, String last_name2, String ci, String country, String genre, String type){
+    public boolean addPlayer(SQLiteDatabase db, SQLiteHelper sqliteHelper, String user, String pass, String name, String last_name1, String last_name2, String ci, String country, String genre, String type){
         if(user.length() > 0 &&
                 pass.length() > 0 &&
                 name.length() > 0 &&
