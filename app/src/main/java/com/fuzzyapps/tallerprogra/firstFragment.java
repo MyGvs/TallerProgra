@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import static com.fuzzyapps.tallerprogra.R.id.countryText;
 import static com.fuzzyapps.tallerprogra.R.id.createPlayer;
 
 
@@ -173,7 +174,20 @@ public class firstFragment extends Fragment {
                 String formGenre = genre.getSelectedItem().toString();
                 String formType = userType.getSelectedItem().toString();
                 sqlite.abrir();
-                sqlite.addPlayer(formUser, formPass, formName, formLastName1, formLastName2, formCI, formCountry, formGenre, formType);
+                if(sqlite.addPlayer(formUser, formPass, formName, formLastName1, formLastName2, formCI, formCountry, formGenre, formType)){
+                    Toast.makeText(getActivity(),"Usuario creado exitosamente.",Toast.LENGTH_SHORT).show();
+                    user.setText("");
+                    password.setText("");
+                    name.setText("");
+                    last_name1.setText("");
+                    last_name2.setText("");
+                    ci.setText("");
+                    country.setSelection(0,true);
+                    genre.setSelection(0,true);
+                    userType.setSelection(0,true);
+                }else{
+                    Toast.makeText(getActivity(),"No se creo el usuario.",Toast.LENGTH_SHORT).show();
+                }
                 sqlite.cerrar();
                 //Toast.makeText(getActivity(),formUser+" - "+formPass+" - "+formName+" - "+formLastName1+" - "+formLastName2+" - "+formCI+" - "+formCountry+" - "+formGenre+" - "+formType,Toast.LENGTH_SHORT).show();
             }
