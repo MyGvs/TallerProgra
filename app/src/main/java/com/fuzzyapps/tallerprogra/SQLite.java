@@ -130,11 +130,18 @@ public class SQLite {
             ContentValues contentValues = new ContentValues();
             contentValues.put( "tipo", userType);
             Log.e("SQLite", "Nueva persona " );
-            return ( db.insert( sqliteHelper.name_table_persona , null, contentValues ) != -1 )?true:false;
+            return ( db.insert( sqliteHelper.name_table_tipo_persona , null, contentValues ) != -1 )?true:false;
         }
         else {
             return false;
         }
+    }
+
+    // Login
+    public Cursor login(String user, String pass){
+        String p_query = "SELECT usuario, clave FROM persona where usuario='"+user+"' and clave='"+pass+"'";
+        //Log.e("Error",p_query);
+        return db.rawQuery(p_query, null);
     }
 
     // Agregar persona
