@@ -87,8 +87,8 @@ public class SQLite {
         if( userType.length()> 0 ){
             ContentValues contentValues = new ContentValues();
             contentValues.put( "tipo", userType);
-            Log.e("SQLite", "Nuevo tipo de persona " );
-            return ( db.insert( sqliteHelper.name_table_tipo_persona , null, contentValues ) != -1 )?true:false;
+            Log.e("SQLite", "Nueva persona " );
+            return ( db.insert( sqliteHelper.name_table_persona , null, contentValues ) != -1 )?true:false;
         }
         else {
             return false;
