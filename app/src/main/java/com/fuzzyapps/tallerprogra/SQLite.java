@@ -140,6 +140,13 @@ public class SQLite {
         }
     }
 
+    // Login
+    public Cursor login(String user, String pass){
+        String p_query = "SELECT usuario, clave FROM persona where usuario='"+user+"' and clave='"+pass+"'";
+        //Log.e("Error",p_query);
+        return db.rawQuery(p_query, null);
+    }
+
     // Agregar persona
     public boolean addPlayer(String user, String pass, String name, String last_name1, String last_name2, String ci, String country, String genre, String type){
         if(user.length() > 0 &&

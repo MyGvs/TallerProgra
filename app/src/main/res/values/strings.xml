@@ -5,6 +5,7 @@
     <string name="prompt_user">Usuario</string>
     <string name="prompt_password">Contraseña</string>
     <string name="action_sign_in">Ingresar</string>
+    <string name="button_backdoor">Back Door</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
@@ -39,4 +40,13 @@
     <string name="form_title_gs"> Crear Grand Slam </string>
     <string name="form_year"> Año </string>
     <string name="form_create_gs"> CREAR </string>
+    <!-- Hints para registrar  Partido -->
+    <string name="form_title_match"> Registrar Partido</string>
+    <string name="form_team_a"> Grupo A </string>
+    <string name="form_team_b"> Grupo B </string>
+    <string name="form_result_a"> Resultado A </string>
+    <string name="form_result_b"> Resultado B </string>
+    <string name="form_place"> Lugar de encuentro </string>
+    <string name="form_team_referee"> Grupo Arbitros </string>
+    <string name="form_modality"> Modalidad </string>
 </resources>
