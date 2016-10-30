@@ -1,54 +1,23 @@
 package com.fuzzyapps.tallerprogra;
 
-import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Environment;
-import android.support.annotation.NonNull;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.app.LoaderManager.LoaderCallbacks;
-
-import android.content.CursorLoader;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.AsyncTask;
-
-import android.os.Build;
+import android.support.v7.app.AppCompatActivity;
+import android.database.Cursor;
 import android.os.Bundle;
-import android.provider.ContactsContract;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import oracle.jdbc.*;
+import java.util.*;
 
-import static android.Manifest.permission.READ_CONTACTS;
-
-/**
- * A login screen that offers login via email/password.
- */
 public class LoginActivity extends AppCompatActivity {
 
     /**
@@ -63,6 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button backDoorButton;
     //SQLite Variables
     private SQLite sqlite;
+    Connection con;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,6 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
+        new retrieveData().execute();
     }
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -153,6 +124,40 @@ public class LoginActivity extends AppCompatActivity {
         */
         //Toast.makeText(this, user+" -- "+password,Toast.LENGTH_SHORT).show();
         sqlite.cerrar();
+    }
+    class retrieveData extends AsyncTask<Void, Void, String> {
+
+        private Exception exception;
+        @Override
+        protected String doInBackground(Void... params) {
+            String result = "";
+            String cadena = "select * from s_REGION order by 1";
+            String driver = "oracle.jdbc.driver.OracleDriver";
+            String UserName = "tallerprogra";
+            String Password = "navia2016 ";
+            String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
+            try{
+                Class.forName(driver).newInstance();
+                con = DriverManager.getConnection(sourceURL,UserName, Password);
+                Statement st = con.createStatement();
+                ResultSet resultado = st.executeQuery(cadena);
+                while(resultado.next()){
+                    Log.e("OK", resultado.getString("id") + " - "+ resultado.getString("name"));
+                }
+                resultado.close();
+                st.close();
+                con.close();
+                result = "ok";
+            }catch (Exception e){
+                Log.e("ERROR", e.toString());
+                result = "";
+            }
+            return result;
+        }
+
+        protected void onPostExecute(String result) {
+
+        }
     }
 }
 
