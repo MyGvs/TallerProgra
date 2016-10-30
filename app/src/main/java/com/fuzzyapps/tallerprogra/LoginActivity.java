@@ -68,18 +68,23 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         sqlite = new SQLite(this);
         sqlite.abrir();
-        /*
-        * Agregar Modalidad
-        * */
-        /*sqlite.addModalidad("Individual Femenino");
+        /*// Agregar Modalidad
+        sqlite.addModalidad("Individual Femenino");
         sqlite.addModalidad("Dobles Femenino");
         sqlite.addModalidad("Individual Masculino");
         sqlite.addModalidad("Dobles Masculino");
-        sqlite.addModalidad("Dobles Mixtos");*/
+        sqlite.addModalidad("Dobles Mixtos");
         //EJEMPLO PARA AGREGAR UN PAIS
-        /*sqlite.addPais("Bolivia");
+        sqlite.addPais("Bolivia");
         sqlite.addPais("Chile");
-        sqlite.addPais("Bangladesh");*/
+        sqlite.addPais("Bangladesh");
+        //Add Jugadores
+        sqlite.addUserType("Jugador");
+        sqlite.addUserType("Arbitro");
+        sqlite.addUserType("Administrador");
+        //Add genero
+        sqlite.addGenre("Femenino");
+        sqlite.addGenre("Masculino");*/
         //EJEMPLO PARA LISTAR LOS PAISES
         try {
             Cursor cursor = sqlite.getAllPais();
@@ -105,9 +110,9 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                attemptLogin();
-                //Intent i = new Intent(LoginActivity.this, activityNavigation.class);
-                //startActivity(i);
+                //attemptLogin();
+                Intent i = new Intent(LoginActivity.this, activityNavigation.class);
+                startActivity(i);
             }
         });
 

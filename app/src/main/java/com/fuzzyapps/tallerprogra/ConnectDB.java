@@ -43,7 +43,7 @@ public class ConnectDB {
     ResultSet getData(String Consulta) {
         ResultSet rs = null;
         try {
-//      System.out.println(Consulta);
+            //System.out.println(Consulta);
             rs = statement.executeQuery(Consulta);
         } catch (SQLException ex) {
             System.out.println("\nSQLException-------------\n");

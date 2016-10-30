@@ -69,11 +69,14 @@ public class SQLite {
     //PARA EL LOGIN
     //FALTA LOGIN EN LA TABLA DE USUARIO CREO
     public Cursor getAllPersonaMasculino(){
-        String p_query = "SELECT idjugador, nombre, apellido, fecha_nacimiento, ci, b.genero, c.tipo FROM persona a, genero b, tipo_persona c WHERE a.genero_idgenero = b.idgenero AND a.tipo_persona_idTipoPersona = c.idTipoPersona AND c.tipo = 'Masculino' ORDER BY idjugador";
+        String masculino = "Masculino";
+        String p_query = "SELECT a.idjugador, a.nombre, a.apellido, a.ci, b.genero, c.tipo FROM persona a, genero b, tipo_persona c WHERE a.genero_idgenero = b.idgenero AND a.tipo_persona_idTipoPersona = c.idTipoPersona AND c.tipo = '"+masculino+"'";
+        //String p_query = "SELECT * FROM persona";
+        Log.e("Masculino","getting masculinos");
         return db.rawQuery(p_query, null);
     }
     public Cursor getAllPersonaFemenino(){
-        String p_query = "SELECT idjugador, nombre, apellido, fecha_nacimiento, ci, b.genero, c.tipo FROM persona a, genero b, tipo_persona c WHERE a.genero_idgenero = b.idgenero AND a.tipo_persona_idTipoPersona = c.idTipoPersona AND c.tipo = 'Femenino' ORDER BY idjugador";
+        String p_query = "SELECT a.idjugador, a.nombre, a.apellido, a.ci, b.genero, c.tipo FROM persona a, genero b, tipo_persona c WHERE a.genero_idgenero = b.idgenero AND a.tipo_persona_idTipoPersona = c.idTipoPersona AND c.tipo = 'Femenino' ORDER BY a.idjugador";
         return db.rawQuery(p_query, null);
     }
     public Cursor getAllPersona(){
@@ -130,7 +133,7 @@ public class SQLite {
             ContentValues contentValues = new ContentValues();
             contentValues.put( "tipo", userType);
             Log.e("SQLite", "Nueva persona " );
-            return ( db.insert( sqliteHelper.name_table_persona , null, contentValues ) != -1 )?true:false;
+            return ( db.insert( sqliteHelper.name_table_tipo_persona , null, contentValues ) != -1 )?true:false;
         }
         else {
             return false;
@@ -164,6 +167,49 @@ public class SQLite {
             Log.e("SQLite", "Nuevoa persona " );
             return ( db.insert( sqliteHelper.name_table_persona , null, contentValues ) != -1 )?true:false;
         }else{
+            return false;
+        }
+    }
+
+
+    public boolean addGrupo(Equipo equipo){
+        //se comprueba que el largo de la variable "pais" es mayor a 0
+        if( equipo.getTeamName().length()> 0 ){
+            ContentValues contentValues = new ContentValues();
+            contentValues.put( "nombre_grupo", equipo.getTeamName());
+            Log.e("SQLite", "Nueva persona " );
+            return ( db.insert( sqliteHelper.name_table_grupo , null, contentValues ) != -1 )?true:false;
+        }
+        else {
+            return false;
+        }
+    }
+    public boolean addGruppoIndividual(Equipo equipo, int idGrupo){
+        //se comprueba que el largo de la variable "pais" es mayor a 0
+        if( equipo.getTeamName().length()> 0 ){
+            ContentValues contentValues = new ContentValues();
+            contentValues.put( "persona_idjugador", equipo.getTeamName());
+            contentValues.put( "greupo_idgrupo", equipo.getIdIntegrante1());
+            contentValues.put( "greupo_idgrupo", idGrupo);
+            Log.e("SQLite", "Nueva persona " );
+            return ( db.insert( sqliteHelper.name_table_grupo , null, contentValues ) != -1 )?true:false;
+        }else {
+            return false;
+        }
+    }
+    public boolean addGrupoDobles(Equipo equipo, int idGrupo){
+        try {
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("persona_idjugador", equipo.getIdIntegrante1());
+            contentValues.put("greupo_idgrupo", idGrupo);
+            ContentValues contentValues2 = new ContentValues();
+            contentValues2.put("persona_idjugador", equipo.getIdIntegrante2());
+            contentValues2.put("greupo_idgrupo", idGrupo);
+            Log.e("SQLite", "Nueva persona ");
+            db.insert(sqliteHelper.name_table_grupo, null, contentValues);
+            db.insert(sqliteHelper.name_table_grupo, null, contentValues2);
+            return true;
+        }catch (Exception e){
             return false;
         }
     }

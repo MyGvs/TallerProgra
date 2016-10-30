@@ -1,6 +1,5 @@
 package com.fuzzyapps.tallerprogra;
 
-
 import android.app.Fragment;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -159,6 +158,9 @@ public class secondFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(!teamName.getText().toString().equals("")){
+                    String playerID[] = teamName.getText().toString().split("\\.");
+                    sqlite.abrir();
+                    sqlite.cerrar();
 
                 }else{
                     Toast.makeText(getActivity(), "Debe ingresar un nombre de equipo.",Toast.LENGTH_SHORT).show();
@@ -258,7 +260,8 @@ public class secondFragment extends Fragment {
             if( cursor.moveToFirst() ) {
                 do {
                     arrayMasculino.add(cursor.getString(0)+". " +cursor.getString(1)+ " "+cursor.getString(2));
-                    //Toast.makeText(getActivity(),cursor.getString(0)+" - "+cursor.getString(1),Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getActivity(),cursor.getString(0)+" - "+cursor.getString(1)+" - "+cursor.getString(2)+" - "+cursor.getString(3)+" - "+cursor.getString(4)+" - "+cursor.getString(5)+" - "+cursor.getString(6)+" - "+cursor.getString(7)+" - "+cursor.getString(8)+" - "+cursor.getString(9),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(),cursor.getString(0)+" - "+cursor.getString(1)+" - "+cursor.getString(2)+" - "+cursor.getString(3)+" - "+cursor.getString(4),Toast.LENGTH_SHORT).show();
                 } while ( cursor.moveToNext() );
             }
         }catch (Exception e){
