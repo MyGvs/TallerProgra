@@ -133,14 +133,13 @@ public class firstFragment extends Fragment {
         }
 
         protected void onPostExecute(ArrayList<classPais> result) {
-            if (result.size() > 0){
-                //OK
-                try {
-                    fillSpinnerCountry(result);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            for(int i=0 ; i<result.size(); i++){
+                Log.e("Con for", result.get(i).getIdPais()+"");
+                arraySpinnerCountry.add(result.get(i).getIdPais()+"."+result.get(i).getPais());
             }
+            ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(getActivity(),
+                    android.R.layout.simple_spinner_item, arraySpinnerCountry);
+            country.setAdapter(countryAdapter);
         }
     }
     class retrieveGenre extends AsyncTask<Void, Void, ArrayList<classGenero> > {
@@ -172,6 +171,7 @@ public class firstFragment extends Fragment {
                     //this.arraySpinnerCountry.add(resultado.getString("IDPAIS")+"."+resultado.getString("PAIS"));
                     generos.add(genero);
                 }
+                System.out.println(generos.size());
                 resultado.close();
                 st.close();
                 con.close();
@@ -185,42 +185,13 @@ public class firstFragment extends Fragment {
         }
 
         protected void onPostExecute(ArrayList<classGenero> result) {
-            if (result.size() > 0){
-                //OK
-                try {
-                    fillSpinnerGeneros(result);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
+            for(int i=0 ; i<result.size(); i++){
+                Log.e("Con for", result.get(i).getIdGenero()+"");
+                arraySpinnerGenre.add(result.get(i).getIdGenero()+"."+result.get(i).getGenero());
             }
+            ArrayAdapter<String> genreAdapter = new ArrayAdapter<String>(getActivity(),
+                    android.R.layout.simple_spinner_item, arraySpinnerGenre);
+            genre.setAdapter(genreAdapter);
         }
-    }
-    private void fillSpinnerCountry(ArrayList<classPais> paises) throws SQLException {
-        Iterator<classPais> it = paises.iterator();
-        while(it.hasNext()){
-            try {
-                //Log.e("Hay un pais", it.next().getIdPais()+" "+it.next().getPais());
-                this.arraySpinnerCountry.add(it.next().getIdPais()+"."+it.next().getPais());
-            }catch (NoSuchElementException e){
-                break;
-            }
-        }
-        ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_item, this.arraySpinnerCountry);
-        country.setAdapter(countryAdapter);
-    }
-    private void fillSpinnerGeneros(ArrayList<classGenero> generos) throws SQLException {
-        Iterator<classGenero> it = generos.iterator();
-        while(it.hasNext()){
-            try {
-                Log.e("Hay un genero", it.next().getIdGenero()+" "+it.next().getGenero());
-                arraySpinnerGenre.add(it.next().getIdGenero()+"."+it.next().getGenero());
-            }catch (NoSuchElementException e){
-                break;
-            }
-        }
-        ArrayAdapter<String> genreAdapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_item, arraySpinnerGenre);
-        genre.setAdapter(genreAdapter);
     }
 }
