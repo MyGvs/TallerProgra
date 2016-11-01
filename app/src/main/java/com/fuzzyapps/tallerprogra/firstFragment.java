@@ -3,6 +3,7 @@ package com.fuzzyapps.tallerprogra;
 
 import android.app.DatePickerDialog;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
@@ -18,7 +19,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static com.fuzzyapps.tallerprogra.R.id.countryText;
 import static com.fuzzyapps.tallerprogra.R.id.createPlayer;
@@ -40,9 +48,6 @@ public class firstFragment extends Fragment {
     private Spinner userType;
     private Button registerButton;
 
-    // Instancia de SQLite
-    private SQLite sqlite;
-
     // Instancias de Clases
     private Persona persona;
 
@@ -50,6 +55,9 @@ public class firstFragment extends Fragment {
     private ArrayList<String> arraySpinnerCountry;
     private ArrayList<String> arraySpinnerGenre;
     private ArrayList<String> arraySpinnerUserType;
+
+    //SQLite Variables
+    Connection con;
 
     public firstFragment() {
         // Required empty public constructor
@@ -62,8 +70,6 @@ public class firstFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        sqlite= new SQLite(getActivity());
-        sqlite.abrir();
 
         //AQUI INICIALIZAR LOS OBJETOS
         user = (EditText) view.findViewById(R.id.user);
@@ -82,116 +88,139 @@ public class firstFragment extends Fragment {
         this.arraySpinnerGenre = new ArrayList<String>();
         this.arraySpinnerUserType = new ArrayList<String>();
 
-        //EJEMPLO PARA AGREGAR UN PAIS
-        /*sqlite.addPais("Bolivia");
-        sqlite.addPais("Chile");
-        sqlite.addPais("Bangladesh");*/
 
-        // CARGAR PAISES
-        try {
-            Cursor cursor = sqlite.getAllPais();
-            if( cursor.moveToFirst() ) {
-                do {
-                    // 0: idpais, 1: pais
-                    //el numero debe ser correlativo a lo que usieron en el SELECT del query
-                    //si es entero usan  cursor.getInt()
-                    // si es varchar usan
-                    //en este caso el id es el sub 0 y es un int y el pais es un varchar uso el getString()
-                    //Toast.makeText(getActivity(),cursor.getInt(0)+" - "+cursor.getString(1),Toast.LENGTH_SHORT).show();
-                    this.arraySpinnerCountry.add(cursor.getInt(0)+"."+cursor.getString(1));
-                } while ( cursor.moveToNext() );
+        new retrieveCountries().execute();
+        new retrieveGenre().execute();
+    }
+    class retrieveCountries extends AsyncTask<Void, Void, ArrayList<classPais> > {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected ArrayList<classPais> doInBackground(Void... params) {
+            String result = "";
+            String driver = "oracle.jdbc.driver.OracleDriver";
+            String UserName = "tallerprogra";
+            String Password = "navia2016 ";
+            String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
+            String cadena = "select * from GFA_PAIS order by idpais";
+            ArrayList<classPais> paises = new ArrayList<classPais>();
+            try{
+                Class.forName(driver).newInstance();
+                con = DriverManager.getConnection(sourceURL,UserName, Password);
+                Statement st = con.createStatement();
+                ResultSet resultado = st.executeQuery(cadena);
+                while(resultado.next()){
+                    Log.e("OK", resultado.getInt("IDPAIS") + " - "+ resultado.getString("PAIS"));
+                    classPais pais = new classPais(resultado.getInt("IDPAIS"), resultado.getString("PAIS"));
+                    //this.arraySpinnerCountry.add(resultado.getString("IDPAIS")+"."+resultado.getString("PAIS"));
+                    paises.add(pais);
+                }
+                resultado.close();
+                st.close();
+                con.close();
+                result = "ok";
+            }catch (Exception e){
+                Log.e("ERROR", e.toString());
+                result = "";
             }
-        }catch (Exception e){
-            Log.e("ERROR", e.getMessage());
+            return paises;
+        }
+
+        protected void onPostExecute(ArrayList<classPais> result) {
+            if (result.size() > 0){
+                //OK
+                try {
+                    fillSpinnerCountry(result);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    class retrieveGenre extends AsyncTask<Void, Void, ArrayList<classGenero> > {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected ArrayList<classGenero> doInBackground(Void... params) {
+            String result = "";
+            String driver = "oracle.jdbc.driver.OracleDriver";
+            String UserName = "tallerprogra";
+            String Password = "navia2016 ";
+            String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
+            String cadena = "select * from GFA_GENERO order by idGenero";
+            ArrayList<classGenero> generos = new ArrayList<classGenero>();
+            try{
+                Class.forName(driver).newInstance();
+                con = DriverManager.getConnection(sourceURL,UserName, Password);
+                Statement st = con.createStatement();
+                ResultSet resultado = st.executeQuery(cadena);
+                while(resultado.next()){
+                    Log.e("OK", resultado.getInt("IDGENERO") + " - "+ resultado.getString("GENERO"));
+                    classGenero genero = new classGenero(resultado.getInt("IDGENERO"), resultado.getString("GENERO"));
+                    //this.arraySpinnerCountry.add(resultado.getString("IDPAIS")+"."+resultado.getString("PAIS"));
+                    generos.add(genero);
+                }
+                resultado.close();
+                st.close();
+                con.close();
+                result = "ok";
+                return generos;
+            }catch (Exception e){
+                Log.e("ERROR", e.toString());
+                result = "";
+            }
+            return null;
+        }
+
+        protected void onPostExecute(ArrayList<classGenero> result) {
+            if (result.size() > 0){
+                //OK
+                try {
+                    fillSpinnerGeneros(result);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    private void fillSpinnerCountry(ArrayList<classPais> paises) throws SQLException {
+        Iterator<classPais> it = paises.iterator();
+        while(it.hasNext()){
+            try {
+                //Log.e("Hay un pais", it.next().getIdPais()+" "+it.next().getPais());
+                this.arraySpinnerCountry.add(it.next().getIdPais()+"."+it.next().getPais());
+            }catch (NoSuchElementException e){
+                break;
+            }
         }
         ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_item, arraySpinnerCountry);
+                android.R.layout.simple_spinner_item, this.arraySpinnerCountry);
         country.setAdapter(countryAdapter);
-
-        //EJEMPLO PARA AGREGAR UN GENERO
-        /*sqlite.addGenre("Masculino");
-        sqlite.addGenre("Femenino");*/
-
-        // CARGAR GENEROS
-        try {
-            Cursor cursor = sqlite.getAllGenre();
-            if( cursor.moveToFirst() ) {
-                do {
-                    // 0: idpais, 1: pais
-                    //el numero debe ser correlativo a lo que usieron en el SELECT del query
-                    //si es entero usan  cursor.getInt()
-                    // si es varchar usan
-                    //en este caso el id es el sub 0 y es un int y el pais es un varchar uso el getString()
-                    //Toast.makeText(getActivity(),cursor.getInt(0)+" - "+cursor.getString(1),Toast.LENGTH_SHORT).show();
-                    this.arraySpinnerGenre.add(cursor.getInt(0)+"."+cursor.getString(1));
-                } while ( cursor.moveToNext() );
+    }
+    private void fillSpinnerGeneros(ArrayList<classGenero> generos) throws SQLException {
+        Iterator<classGenero> it = generos.iterator();
+        while(it.hasNext()){
+            try {
+                Log.e("Hay un genero", it.next().getIdGenero()+" "+it.next().getGenero());
+                arraySpinnerGenre.add(it.next().getIdGenero()+"."+it.next().getGenero());
+            }catch (NoSuchElementException e){
+                break;
             }
-        }catch (Exception e){
-            Log.e("ERROR", e.getMessage());
         }
         ArrayAdapter<String> genreAdapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, arraySpinnerGenre);
         genre.setAdapter(genreAdapter);
-
-        //EJEMPLO PARA AGREGAR UN TIPO
-        /*sqlite.addUserType("Jugador");
-        sqlite.addUserType("Arbitro");
-        sqlite.addUserType("Administrador");*/
-
-        // CARGAR TIPOS DE USUARIO
-        try {
-            Cursor cursor = sqlite.getAllUserType();
-            if( cursor.moveToFirst() ) {
-                do {
-                    // 0: idpais, 1: pais
-                    //el numero debe ser correlativo a lo que usieron en el SELECT del query
-                    //si es entero usan  cursor.getInt()
-                    // si es varchar usan
-                    //en este caso el id es el sub 0 y es un int y el pais es un varchar uso el getString()
-                    //Toast.makeText(getActivity(),cursor.getInt(0)+" - "+cursor.getString(1),Toast.LENGTH_SHORT).show();
-                    this.arraySpinnerUserType.add(cursor.getInt(0)+"."+cursor.getString(1));
-                } while ( cursor.moveToNext() );
-            }
-        }catch (Exception e){
-            Log.e("ERROR", e.getMessage());
-        }
-        ArrayAdapter<String> userTypeAdapter = new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_spinner_item, arraySpinnerUserType);
-        userType.setAdapter(userTypeAdapter);
-        sqlite.cerrar();
-        // Crear evento onClick de registrar
-        registerButton.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v){
-                // Registro de jugador
-                String formUser = user.getText().toString();
-                String formPass = password.getText().toString();
-                String formName = name.getText().toString();
-                String formLastName1 = last_name1.getText().toString();
-                String formLastName2 = last_name2.getText().toString();
-                String formCI = ci.getText().toString();
-                String formCountry = country.getSelectedItem().toString();
-                String formGenre = genre.getSelectedItem().toString();
-                String formType = userType.getSelectedItem().toString();
-                sqlite.abrir();
-                if(sqlite.addPlayer(formUser, formPass, formName, formLastName1, formLastName2, formCI, formCountry, formGenre, formType)){
-                    Toast.makeText(getActivity(),"Usuario creado exitosamente.",Toast.LENGTH_SHORT).show();
-                    user.setText("");
-                    password.setText("");
-                    name.setText("");
-                    last_name1.setText("");
-                    last_name2.setText("");
-                    ci.setText("");
-                    country.setSelection(0,true);
-                    genre.setSelection(0,true);
-                    userType.setSelection(0,true);
-                }else{
-                    Toast.makeText(getActivity(),"No se creo el usuario.",Toast.LENGTH_SHORT).show();
-                }
-                sqlite.cerrar();
-                //Toast.makeText(getActivity(),formUser+" - "+formPass+" - "+formName+" - "+formLastName1+" - "+formLastName2+" - "+formCI+" - "+formCountry+" - "+formGenre+" - "+formType,Toast.LENGTH_SHORT).show();
-            }
-        });
     }
-
 }
