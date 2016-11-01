@@ -2,6 +2,7 @@ package com.fuzzyapps.tallerprogra;
 
 import android.app.Fragment;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -14,6 +15,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 
@@ -26,6 +31,9 @@ public class secondFragment extends Fragment {
     private ArrayList<String> arrayMixto = new ArrayList<String>();
     private Button individualF, doblesF, individualM, doblesM, doblesMix;
     private LayoutInflater layoutInflater;
+    private ArrayAdapter<String> adapterFemenino, adapterFemenino2, adapterMasculino, adapterMasculino2, adapterMixto, adapterMixto2;
+
+    Connection con;
 
     public secondFragment() {
         // Required empty public constructor
@@ -84,10 +92,10 @@ public class secondFragment extends Fragment {
         Button register = (Button) view.findViewById(R.id.register);
         Spinner integranteA = (Spinner) view.findViewById(R.id.integranteA);
         final EditText teamName = (EditText) view.findViewById(R.id.teamName);
-        ArrayAdapter<String> adapterFemenino = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayFemenino);
+        adapterFemenino = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayFemenino);
         integranteA.setAdapter(adapterFemenino);
-        cargarArrayFemenino();
-        adapterFemenino.notifyDataSetChanged();
+        arrayFemenino.clear();
+        new getAllFemenino().execute();
         //agregar a los spinners las perosnas
         builder.setView(view);
         final AlertDialog alert = builder.create();
@@ -112,13 +120,13 @@ public class secondFragment extends Fragment {
         Spinner integranteA = (Spinner) view.findViewById(R.id.integranteA);
         Spinner integranteB = (Spinner) view.findViewById(R.id.integranteB);
         final EditText teamName = (EditText) view.findViewById(R.id.teamName);
-        ArrayAdapter<String> adapterFemenino = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayFemenino);
+        adapterFemenino = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayFemenino);
         integranteA.setAdapter(adapterFemenino);
-        ArrayAdapter<String> adapterMasculino = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayMasculino);
+        adapterMasculino = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayMasculino);
         integranteB.setAdapter(adapterMasculino);
 
-        cargarArrayFemenino();
-        cargarArrayMasculino();
+        //cargarArrayFemenino();
+        //cargarArrayMasculino();
         adapterFemenino.notifyDataSetChanged();
         adapterMasculino.notifyDataSetChanged();
         //agregar a los spinners las perosnas
@@ -144,10 +152,9 @@ public class secondFragment extends Fragment {
         Button register = (Button) view.findViewById(R.id.register);
         Spinner integranteA = (Spinner) view.findViewById(R.id.integranteA);
         final EditText teamName = (EditText) view.findViewById(R.id.teamName);
-        ArrayAdapter<String> adapterMasculino = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayMasculino);
+        adapterMasculino = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayMasculino);
         integranteA.setAdapter(adapterMasculino);
-        cargarArrayMasculino();
-        adapterMasculino.notifyDataSetChanged();
+        new getAllMasculino().execute();
         //agregar a los spinners las perosnas
         builder.setView(view);
         final AlertDialog alert = builder.create();
@@ -174,13 +181,13 @@ public class secondFragment extends Fragment {
         Spinner integranteA = (Spinner) view.findViewById(R.id.integranteA);
         Spinner integranteB = (Spinner) view.findViewById(R.id.integranteB);
         final EditText teamName = (EditText) view.findViewById(R.id.teamName);
-        ArrayAdapter<String> adapterFemenino = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayFemenino);
+        adapterFemenino = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayFemenino);
         integranteA.setAdapter(adapterFemenino);
-        ArrayAdapter<String> adapterMasculino = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayMasculino);
+        adapterMasculino = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayMasculino);
         integranteB.setAdapter(adapterMasculino);
 
-        cargarArrayFemenino();
-        cargarArrayMasculino();
+        new getAllMasculino().execute();
+        //cargarArrayMasculino();
         adapterFemenino.notifyDataSetChanged();
         adapterMasculino.notifyDataSetChanged();
         //agregar a los spinners las perosnas
@@ -212,8 +219,8 @@ public class secondFragment extends Fragment {
         ArrayAdapter<String> adapterMasculino = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayMasculino);
         integranteB.setAdapter(adapterMasculino);
 
-        cargarArrayFemenino();
-        cargarArrayMasculino();
+        //cargarArrayFemenino();
+        //cargarArrayMasculino();
         adapterFemenino.notifyDataSetChanged();
         adapterMasculino.notifyDataSetChanged();
         //agregar a los spinners las perosnas
@@ -232,40 +239,96 @@ public class secondFragment extends Fragment {
         });
         alert.show();
     }
-    private void cargarArrayFemenino() {
-        arrayFemenino.clear();
-        /*sqlite.abrir();
-        try {
-            Cursor cursor = sqlite.getAllPersonaFemenino();
-            if( cursor.moveToFirst() ) {
-                do {
-                    arrayFemenino.add(cursor.getString(0)+". " +cursor.getString(1)+ " "+cursor.getString(2));
-                    //Toast.makeText(getActivity(),cursor.getString(0)+" - "+cursor.getString(1),Toast.LENGTH_SHORT).show();
-                } while ( cursor.moveToNext() );
-            }
-        }catch (Exception e){
-            Log.e("ERROR", e.getMessage());
-        }
-        sqlite.cerrar();*/
+    private void notifyChanged(){
+        adapterMasculino.notifyDataSetChanged();
+        adapterFemenino.notifyDataSetChanged();
     }
-    private void cargarArrayMasculino() {
-        arrayMasculino.clear();
-        /*sqlite.abrir();
-        try {
-            Cursor cursor = sqlite.getAllPersonaMasculino();
-            if( cursor.moveToFirst() ) {
-                do {
-                    arrayMasculino.add(cursor.getString(0)+". " +cursor.getString(1)+ " "+cursor.getString(2));
-                    //Toast.makeText(getActivity(),cursor.getString(0)+" - "+cursor.getString(1)+" - "+cursor.getString(2)+" - "+cursor.getString(3)+" - "+cursor.getString(4)+" - "+cursor.getString(5)+" - "+cursor.getString(6)+" - "+cursor.getString(7)+" - "+cursor.getString(8)+" - "+cursor.getString(9),Toast.LENGTH_SHORT).show();
-                    Toast.makeText(getActivity(),cursor.getString(0)+" - "+cursor.getString(1)+" - "+cursor.getString(2)+" - "+cursor.getString(3)+" - "+cursor.getString(4),Toast.LENGTH_SHORT).show();
-                } while ( cursor.moveToNext() );
-            }
-        }catch (Exception e){
-            Log.e("ERROR", e.getMessage());
-        }
-        sqlite.cerrar();*/
-    }
-
     //APIS
+    class getAllMasculino extends AsyncTask<Void, Void, String> {
 
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            arrayMasculino.clear();
+        }
+        @Override
+        protected String doInBackground(Void... params) {
+            String result = "";
+            String driver = "oracle.jdbc.driver.OracleDriver";
+            String UserName = "tallerprogra";
+            String Password = "navia2016 ";
+            String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
+            String cadena = "SELECT * FROM gfa_persona a, gfa_t_persona b, gfa_genero c " +
+                    "WHERE a.idgenero = c.idgenero AND a.idTipoPersona = b.idTipoPersona AND a.idgenero=2 AND a.idTipoPersona=1";
+            try{
+                Class.forName(driver).newInstance();
+                con = DriverManager.getConnection(sourceURL,UserName, Password);
+                Statement st = con.createStatement();
+                ResultSet resultado = st.executeQuery(cadena);
+                while(resultado.next()){
+                    arrayMasculino.add(resultado.getString("idjugador")+". "+resultado.getString("nombre")+" "+resultado.getString("apellido"));
+                    Log.e("got ",""+resultado.getString("idjugador")+". "+resultado.getString("nombre")+" "+resultado.getString("apellido"));
+                }
+                resultado.close();
+                st.close();
+                con.close();
+                result = "ok";
+            }catch (Exception e){
+                Log.e("ERROR", e.toString());
+                result = "";
+            }
+            return result;
+        }
+
+        protected void onPostExecute(String result) {
+            if (!result.equals("")){
+                notifyChanged();
+                Log.e("got ","listo"+arrayMasculino.size());
+                for(int i=0; i<arrayMasculino.size(); i++){
+                    Log.e("got ",arrayMasculino.get(i));
+                }
+            }
+        }
+    }
+    class getAllFemenino extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            arrayFemenino.clear();
+        }
+        @Override
+        protected String doInBackground(Void... params) {
+            String result = "";
+            String driver = "oracle.jdbc.driver.OracleDriver";
+            String UserName = "tallerprogra";
+            String Password = "navia2016 ";
+            String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
+            String cadena = "SELECT * FROM gfa_persona a, gfa_t_persona b, gfa_genero c " +
+                    "WHERE a.idgenero = c.idgenero AND a.idTipoPersona = b.idTipoPersona AND a.idgenero=1 AND a.idTipoPersona=1";
+            try{
+                Class.forName(driver).newInstance();
+                con = DriverManager.getConnection(sourceURL,UserName, Password);
+                Statement st = con.createStatement();
+                ResultSet resultado = st.executeQuery(cadena);
+                while(resultado.next()){
+                    arrayFemenino.add(resultado.getString("idjugador")+". "+resultado.getString("nombre")+" "+resultado.getString("apellido"));
+                }
+                resultado.close();
+                st.close();
+                con.close();
+                result = "ok";
+            }catch (Exception e){
+                Log.e("ERROR", e.toString());
+                result = "";
+            }
+            return result;
+        }
+
+        protected void onPostExecute(String result) {
+            if (!result.equals("")){
+                notifyChanged();
+            }
+        }
+    }
 }
