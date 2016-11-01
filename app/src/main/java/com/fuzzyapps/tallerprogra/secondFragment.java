@@ -234,6 +234,7 @@ public class secondFragment extends Fragment {
     }
     private void cargarArrayFemenino() {
         arrayFemenino.clear();
+        //new getAllFemenino().execute();
         /*sqlite.abrir();
         try {
             Cursor cursor = sqlite.getAllPersonaFemenino();
@@ -250,6 +251,7 @@ public class secondFragment extends Fragment {
     }
     private void cargarArrayMasculino() {
         arrayMasculino.clear();
+        //new getAllMasculino().execute();
         /*sqlite.abrir();
         try {
             Cursor cursor = sqlite.getAllPersonaMasculino();
