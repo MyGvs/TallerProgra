@@ -19,8 +19,6 @@ public class thirdFragment extends Fragment {
     // Inputs
     private EditText year;
     private Button crear;
-    // Instancia de SQLite
-    private SQLite sqlite;
 
     public thirdFragment() {
         // Required empty public constructor
@@ -35,8 +33,6 @@ public class thirdFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        sqlite= new SQLite(getActivity());
-        sqlite.abrir();
         //AQUI INICIALIZAR LOS OBJETOS
         year = (EditText) view.findViewById(R.id.year);
         crear = (Button) view.findViewById(R.id.createGs);
@@ -50,8 +46,6 @@ public class thirdFragment extends Fragment {
                 Toast.makeText(getActivity(), "Torneo creado "+anio, Toast.LENGTH_SHORT).show();
             }
         });
-
-        sqlite.cerrar();
     }
 
 }

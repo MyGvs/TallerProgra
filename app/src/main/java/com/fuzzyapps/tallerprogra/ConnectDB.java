@@ -14,15 +14,16 @@ public class ConnectDB {
     Statement statement;
 
     public ConnectDB() {
-        String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
+        String cadena = "select * from s_REGION order by 1";
+        String driver = "oracle.jdbc.driver.OracleDriver";
         String UserName = "tallerprogra";
         String Password = "navia2016 ";
+        String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
         try {
-            DriverManager.registerDriver(new oracle.jdbc.OracleDriver());
-            conexion = DriverManager.getConnection
-                    (sourceURL, UserName, Password);
+            Class.forName(driver).newInstance();
+            conexion = DriverManager.getConnection(sourceURL, UserName, Password);
             statement = conexion.createStatement();
-        } catch (SQLException sqle) {
+        } catch (Exception sqle) {
             System.err.println(sqle);
         }
     }

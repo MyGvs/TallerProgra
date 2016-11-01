@@ -14,7 +14,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 
 
@@ -27,7 +26,6 @@ public class secondFragment extends Fragment {
     private ArrayList<String> arrayMixto = new ArrayList<String>();
     private Button individualF, doblesF, individualM, doblesM, doblesMix;
     private LayoutInflater layoutInflater;
-    private SQLite sqlite;
 
     public secondFragment() {
         // Required empty public constructor
@@ -46,7 +44,6 @@ public class secondFragment extends Fragment {
         individualM = (Button) view.findViewById(R.id.individualM);
         doblesM = (Button) view.findViewById(R.id.doblesM);
         doblesMix = (Button) view.findViewById(R.id.doblesMix);
-        sqlite = new SQLite(getActivity());
 
         individualF.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,7 +95,7 @@ public class secondFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 if(!teamName.getText().toString().equals("")){
-                    SQLite sqlite = new SQLite(getActivity());
+
                 }else{
                     Toast.makeText(getActivity(), "Debe ingresar un nombre de equipo.",Toast.LENGTH_SHORT).show();
                 }
@@ -159,8 +156,7 @@ public class secondFragment extends Fragment {
             public void onClick(View view) {
                 if(!teamName.getText().toString().equals("")){
                     String playerID[] = teamName.getText().toString().split("\\.");
-                    sqlite.abrir();
-                    sqlite.cerrar();
+
 
                 }else{
                     Toast.makeText(getActivity(), "Debe ingresar un nombre de equipo.",Toast.LENGTH_SHORT).show();
@@ -238,7 +234,7 @@ public class secondFragment extends Fragment {
     }
     private void cargarArrayFemenino() {
         arrayFemenino.clear();
-        sqlite.abrir();
+        /*sqlite.abrir();
         try {
             Cursor cursor = sqlite.getAllPersonaFemenino();
             if( cursor.moveToFirst() ) {
@@ -250,11 +246,11 @@ public class secondFragment extends Fragment {
         }catch (Exception e){
             Log.e("ERROR", e.getMessage());
         }
-        sqlite.cerrar();
+        sqlite.cerrar();*/
     }
     private void cargarArrayMasculino() {
         arrayMasculino.clear();
-        sqlite.abrir();
+        /*sqlite.abrir();
         try {
             Cursor cursor = sqlite.getAllPersonaMasculino();
             if( cursor.moveToFirst() ) {
@@ -267,6 +263,9 @@ public class secondFragment extends Fragment {
         }catch (Exception e){
             Log.e("ERROR", e.getMessage());
         }
-        sqlite.cerrar();
+        sqlite.cerrar();*/
     }
+
+    //APIS
+
 }
