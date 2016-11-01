@@ -66,15 +66,21 @@ public class LoginActivity extends AppCompatActivity {
     }
     class retrieveData extends AsyncTask<Void, Void, String> {
 
-        private Exception exception;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
         @Override
         protected String doInBackground(Void... params) {
             String result = "";
-            String cadena = "select * from s_REGION order by 1";
             String driver = "oracle.jdbc.driver.OracleDriver";
             String UserName = "tallerprogra";
             String Password = "navia2016 ";
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
+            String cadena = "select * from s_REGION order by 1";
             try{
                 Class.forName(driver).newInstance();
                 con = DriverManager.getConnection(sourceURL,UserName, Password);
@@ -95,7 +101,10 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(String result) {
+            if (!result.equals("")){
+                //OK
 
+            }
         }
     }
     /*private void prepararTablaPais() {
