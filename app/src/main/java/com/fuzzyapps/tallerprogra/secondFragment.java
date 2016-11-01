@@ -240,8 +240,24 @@ public class secondFragment extends Fragment {
         alert.show();
     }
     private void notifyChanged(){
-        adapterMasculino.notifyDataSetChanged();
-        adapterFemenino.notifyDataSetChanged();
+        try {
+            adapterMasculino.notifyDataSetChanged();
+        }catch (Exception e){}
+        try {
+            adapterMasculino2.notifyDataSetChanged();
+        }catch (Exception e){}
+        try{
+            adapterFemenino.notifyDataSetChanged();
+        }catch (Exception e){}
+        try{
+            adapterFemenino2.notifyDataSetChanged();
+        }catch (Exception e){}
+        try {
+            adapterMixto.notifyDataSetChanged();
+        }catch (Exception e){}
+        try {
+            adapterMixto2.notifyDataSetChanged();
+        }catch (Exception e){}
     }
     //APIS
     class getAllMasculino extends AsyncTask<Void, Void, String> {
