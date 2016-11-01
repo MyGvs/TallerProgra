@@ -2,6 +2,7 @@ package com.fuzzyapps.tallerprogra;
 
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -88,17 +89,22 @@ public class firstFragment extends Fragment {
         this.arraySpinnerGenre = new ArrayList<String>();
         this.arraySpinnerUserType = new ArrayList<String>();
 
+        registerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("EXITO");
+                new addPlayer().execute();
+            }
+        });
 
         new retrieveCountries().execute();
         new retrieveGenre().execute();
+        new retrieveUserType().execute();
     }
     class retrieveCountries extends AsyncTask<Void, Void, ArrayList<classPais> > {
-
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
         }
 
         @Override
@@ -143,8 +149,6 @@ public class firstFragment extends Fragment {
         }
     }
     class retrieveGenre extends AsyncTask<Void, Void, ArrayList<classGenero> > {
-
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -192,6 +196,104 @@ public class firstFragment extends Fragment {
             ArrayAdapter<String> genreAdapter = new ArrayAdapter<String>(getActivity(),
                     android.R.layout.simple_spinner_item, arraySpinnerGenre);
             genre.setAdapter(genreAdapter);
+        }
+    }
+    class retrieveUserType extends AsyncTask<Void, Void, ArrayList<classUserType> > {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected ArrayList<classUserType> doInBackground(Void... params) {
+            String result = "";
+            String driver = "oracle.jdbc.driver.OracleDriver";
+            String UserName = "tallerprogra";
+            String Password = "navia2016 ";
+            String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
+            String cadena = "select * from GFA_T_PERSONA order by idtipopersona";
+            ArrayList<classUserType> tipos = new ArrayList<classUserType>();
+            try{
+                Class.forName(driver).newInstance();
+                con = DriverManager.getConnection(sourceURL,UserName, Password);
+                Statement st = con.createStatement();
+                ResultSet resultado = st.executeQuery(cadena);
+                while(resultado.next()){
+                    Log.e("OK", resultado.getInt("IDTIPOPERSONA") + " - "+ resultado.getString("TIPO"));
+                    classUserType tipo = new classUserType(resultado.getInt("IDTIPOPERSONA"), resultado.getString("TIPO"));
+                    //this.arraySpinnerCountry.add(resultado.getString("IDPAIS")+"."+resultado.getString("PAIS"));
+                    tipos.add(tipo);
+                }
+                System.out.println(tipos.size());
+                resultado.close();
+                st.close();
+                con.close();
+                result = "ok";
+                return tipos;
+            }catch (Exception e){
+                Log.e("ERROR", e.toString());
+                result = "";
+            }
+            return null;
+        }
+
+        protected void onPostExecute(ArrayList<classUserType> result) {
+            for(int i=0 ; i<result.size(); i++){
+                Log.e("Con for", result.get(i).getIdTipoPersona()+"");
+                arraySpinnerUserType.add(result.get(i).getIdTipoPersona()+"."+result.get(i).getTipoPersona());
+            }
+            ArrayAdapter<String> userTypeAdapter = new ArrayAdapter<String>(getActivity(),
+                    android.R.layout.simple_spinner_item, arraySpinnerUserType);
+            userType.setAdapter(userTypeAdapter);
+        }
+    }
+    class addPlayer extends AsyncTask<Void, Void, String > {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            // Split de variables
+            String[] countrySplit = country.getSelectedItem().toString().split("\\.");
+            String[] genreSplit = genre.getSelectedItem().toString().split("\\.");
+            String[] userTypeSplit = userType.getSelectedItem().toString().split("\\.");
+            String result = "";
+            String driver = "oracle.jdbc.driver.OracleDriver";
+            String UserName = "tallerprogra";
+            String Password = "navia2016 ";
+            String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
+            String cadena = "insert into gfa_persona(nombre, apellido, ci, idgenero, idpais, idTipoPersona, usuario, clave" +
+                    ") VALUES('"+name.getText().toString()+"' ,"+
+                    "'"+last_name1.getText().toString()+" "+last_name2.getText().toString()+"' ,"+
+                    ci.getText().toString()+" ,"+
+                    genreSplit[0]+" ,"+
+                    countrySplit[0]+" ,"+
+                    userTypeSplit[0]+" ,"+
+                    "'"+user.getText().toString()+"' ,"+
+                    "'"+password.getText().toString()+"')";
+            System.out.println(cadena);
+            try{
+                Class.forName(driver).newInstance();
+                con = DriverManager.getConnection(sourceURL,UserName, Password);
+                Statement st = con.createStatement();
+                st.execute(cadena);
+
+                st.close();
+                con.close();
+                result = "ok";
+            }catch (Exception e){
+                Log.e("ERROR", e.toString());
+                result = "";
+            }
+            return null;
+        }
+
+        protected void onPostExecute(String result) {
+
         }
     }
 }
