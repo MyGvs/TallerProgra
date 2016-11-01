@@ -3,6 +3,7 @@ package com.fuzzyapps.tallerprogra;
 
 import android.app.DatePickerDialog;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.app.Fragment;
@@ -18,7 +19,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static com.fuzzyapps.tallerprogra.R.id.countryText;
 import static com.fuzzyapps.tallerprogra.R.id.createPlayer;
@@ -28,6 +36,28 @@ import static com.fuzzyapps.tallerprogra.R.id.createPlayer;
  * A simple {@link Fragment} subclass.
  */
 public class firstFragment extends Fragment {
+    // Inputs
+    private EditText user;
+    private EditText password;
+    private EditText name;
+    private EditText last_name1;
+    private EditText last_name2;
+    private EditText ci;
+    private Spinner country;
+    private Spinner genre;
+    private Spinner userType;
+    private Button registerButton;
+
+    // Instancias de Clases
+    private Persona persona;
+
+    // Spinner arrays
+    private ArrayList<String> arraySpinnerCountry;
+    private ArrayList<String> arraySpinnerGenre;
+    private ArrayList<String> arraySpinnerUserType;
+
+    //SQLite Variables
+    Connection con;
 
     public firstFragment() {
         // Required empty public constructor
@@ -41,6 +71,156 @@ public class firstFragment extends Fragment {
     public void onViewCreated(final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-    }
+        //AQUI INICIALIZAR LOS OBJETOS
+        user = (EditText) view.findViewById(R.id.user);
+        password = (EditText) view.findViewById(R.id.password);
+        name = (EditText) view.findViewById(R.id.name);
+        last_name1 = (EditText) view.findViewById(R.id.last_name1);
+        last_name2 = (EditText) view.findViewById(R.id.last_name2);
+        ci = (EditText) view.findViewById(R.id.ci);
+        country = (Spinner) view.findViewById(R.id.country);
+        genre = (Spinner) view.findViewById(R.id.genre);
+        userType = (Spinner) view.findViewById(R.id.userType);
+        registerButton = (Button) view.findViewById(createPlayer);
 
+        // INICIALIZACION DE ARRAYS
+        this.arraySpinnerCountry = new ArrayList<String>();
+        this.arraySpinnerGenre = new ArrayList<String>();
+        this.arraySpinnerUserType = new ArrayList<String>();
+
+
+        new retrieveCountries().execute();
+        new retrieveGenre().execute();
+    }
+    class retrieveCountries extends AsyncTask<Void, Void, ArrayList<classPais> > {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected ArrayList<classPais> doInBackground(Void... params) {
+            String result = "";
+            String driver = "oracle.jdbc.driver.OracleDriver";
+            String UserName = "tallerprogra";
+            String Password = "navia2016 ";
+            String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
+            String cadena = "select * from GFA_PAIS order by idpais";
+            ArrayList<classPais> paises = new ArrayList<classPais>();
+            try{
+                Class.forName(driver).newInstance();
+                con = DriverManager.getConnection(sourceURL,UserName, Password);
+                Statement st = con.createStatement();
+                ResultSet resultado = st.executeQuery(cadena);
+                while(resultado.next()){
+                    Log.e("OK", resultado.getInt("IDPAIS") + " - "+ resultado.getString("PAIS"));
+                    classPais pais = new classPais(resultado.getInt("IDPAIS"), resultado.getString("PAIS"));
+                    //this.arraySpinnerCountry.add(resultado.getString("IDPAIS")+"."+resultado.getString("PAIS"));
+                    paises.add(pais);
+                }
+                resultado.close();
+                st.close();
+                con.close();
+                result = "ok";
+            }catch (Exception e){
+                Log.e("ERROR", e.toString());
+                result = "";
+            }
+            return paises;
+        }
+
+        protected void onPostExecute(ArrayList<classPais> result) {
+            if (result.size() > 0){
+                //OK
+                try {
+                    fillSpinnerCountry(result);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    class retrieveGenre extends AsyncTask<Void, Void, ArrayList<classGenero> > {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected ArrayList<classGenero> doInBackground(Void... params) {
+            String result = "";
+            String driver = "oracle.jdbc.driver.OracleDriver";
+            String UserName = "tallerprogra";
+            String Password = "navia2016 ";
+            String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
+            String cadena = "select * from GFA_GENERO order by idGenero";
+            ArrayList<classGenero> generos = new ArrayList<classGenero>();
+            try{
+                Class.forName(driver).newInstance();
+                con = DriverManager.getConnection(sourceURL,UserName, Password);
+                Statement st = con.createStatement();
+                ResultSet resultado = st.executeQuery(cadena);
+                while(resultado.next()){
+                    Log.e("OK", resultado.getInt("IDGENERO") + " - "+ resultado.getString("GENERO"));
+                    classGenero genero = new classGenero(resultado.getInt("IDGENERO"), resultado.getString("GENERO"));
+                    //this.arraySpinnerCountry.add(resultado.getString("IDPAIS")+"."+resultado.getString("PAIS"));
+                    generos.add(genero);
+                }
+                resultado.close();
+                st.close();
+                con.close();
+                result = "ok";
+                return generos;
+            }catch (Exception e){
+                Log.e("ERROR", e.toString());
+                result = "";
+            }
+            return null;
+        }
+
+        protected void onPostExecute(ArrayList<classGenero> result) {
+            if (result.size() > 0){
+                //OK
+                try {
+                    fillSpinnerGeneros(result);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    private void fillSpinnerCountry(ArrayList<classPais> paises) throws SQLException {
+        Iterator<classPais> it = paises.iterator();
+        while(it.hasNext()){
+            try {
+                //Log.e("Hay un pais", it.next().getIdPais()+" "+it.next().getPais());
+                this.arraySpinnerCountry.add(it.next().getIdPais()+"."+it.next().getPais());
+            }catch (NoSuchElementException e){
+                break;
+            }
+        }
+        ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, this.arraySpinnerCountry);
+        country.setAdapter(countryAdapter);
+    }
+    private void fillSpinnerGeneros(ArrayList<classGenero> generos) throws SQLException {
+        Iterator<classGenero> it = generos.iterator();
+        while(it.hasNext()){
+            try {
+                Log.e("Hay un genero", it.next().getIdGenero()+" "+it.next().getGenero());
+                arraySpinnerGenre.add(it.next().getIdGenero()+"."+it.next().getGenero());
+            }catch (NoSuchElementException e){
+                break;
+            }
+        }
+        ArrayAdapter<String> genreAdapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, arraySpinnerGenre);
+        genre.setAdapter(genreAdapter);
+    }
 }
