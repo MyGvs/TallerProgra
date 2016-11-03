@@ -189,7 +189,7 @@ public class firstFragment extends Fragment {
         }
 
         protected void onPostExecute(ArrayList<classGenero> result) {
-            for(int i=0 ; i<result.size(); i++){
+            for(int i=0 ; i<(int)result.size(); i++){
                 Log.e("Con for", result.get(i).getIdGenero()+"");
                 arraySpinnerGenre.add(result.get(i).getIdGenero()+"."+result.get(i).getGenero());
             }
