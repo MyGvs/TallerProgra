@@ -303,6 +303,9 @@ public class firstFragment extends Fragment {
                 country.setSelection(0);
                 genre.setSelection(0);
                 userType.setSelection(0);
+                Toast.makeText(getActivity(), "Se registro correctamente.", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(getActivity(), "Ocurrió un problema con el registro.", Toast.LENGTH_SHORT).show();
             }
         }
     }
