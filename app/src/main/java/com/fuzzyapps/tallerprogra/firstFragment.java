@@ -289,11 +289,21 @@ public class firstFragment extends Fragment {
                 Log.e("ERROR", e.toString());
                 result = "";
             }
-            return null;
+            return result;
         }
 
         protected void onPostExecute(String result) {
-
+            if(result.equals("ok")){
+                user.setText("");
+                password.setText("");
+                name.setText("");
+                last_name1.setText("");
+                last_name2.setText("");
+                ci.setText("");
+                country.setSelection(0);
+                genre.setSelection(0);
+                userType.setSelection(0);
+            }
         }
     }
 }
