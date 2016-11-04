@@ -10,4 +10,5 @@
     <color name="victory">#33691e</color>
     <color name="white">#fff</color>
     <color name="textColor">#000</color>
+    <color name="draw">#f9a825</color>
 </resources>

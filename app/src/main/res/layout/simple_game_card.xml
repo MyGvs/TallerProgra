@@ -39,7 +39,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="VS"
-                android:textSize="45dp"/>
+                android:textSize="50dp"/>
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -62,6 +62,15 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/lose"
                     android:padding="3dp"
+                    android:visibility="gone"
+                    android:text="3" />
+                <TextView
+                    android:id="@+id/vicder2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/lose"
+                    android:padding="3dp"
+                    android:visibility="gone"
                     android:text="Derrota" />
             </LinearLayout>
             <LinearLayout
@@ -86,6 +95,15 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/victory"
                     android:padding="3dp"
+                    android:visibility="gone"
+                    android:text="6" />
+                <TextView
+                    android:id="@+id/vicder1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/victory"
+                    android:padding="3dp"
+                    android:visibility="gone"
                     android:text="Victoria" />
             </LinearLayout>
         </RelativeLayout>

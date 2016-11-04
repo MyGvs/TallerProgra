@@ -18,11 +18,11 @@
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Registrar Resultado" />
+            android:title="Registrar Partidas" />
         <item
             android:id="@+id/nav_match"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Registrar Partidas" />
+            android:title="Registrar Resultado" />
     </group>
 
     <item android:title="Communicate">

@@ -11,6 +11,7 @@
         android:layout_marginLeft="@dimen/general_margin">
 
     </android.support.v7.widget.RecyclerView>
+    <!--
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
@@ -18,6 +19,6 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_dialog_email" />
+        android:src="@android:drawable/ic_dialog_email" />-->
 
 </RelativeLayout>
