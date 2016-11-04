@@ -304,8 +304,10 @@ public class firstFragment extends Fragment {
                 genre.setSelection(0);
                 userType.setSelection(0);
                 Toast.makeText(getActivity(), "Se registro correctamente.", Toast.LENGTH_SHORT).show();
+                System.out.print("Se registro correctamente.");
             }else{
                 Toast.makeText(getActivity(), "Ocurrió un problema con el registro.", Toast.LENGTH_SHORT).show();
+                System.out.print("Ocurrió un problema con el registro.");
             }
         }
     }
