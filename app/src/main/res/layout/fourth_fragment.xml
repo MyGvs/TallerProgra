@@ -53,12 +53,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/form_result_a"
-                    android:id="@+id/resultA"
-                    android:inputType="text" />
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -83,13 +77,6 @@
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/form_result_a"
-                    android:id="@+id/resultB"
-                    android:inputType="text" />
 
             </android.support.design.widget.TextInputLayout>
             <android.support.design.widget.TextInputLayout
@@ -161,6 +148,22 @@
                     android:layout_weight="1" />
 
             </android.support.design.widget.TextInputLayout>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minWidth="88dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="@string/form_register_button"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/createMatch"
+                android:textColor="@color/textButtons"
+                android:theme="@style/MaterialButton"
+                android:layout_below="@+id/filtro"
+                android:layout_centerHorizontal="true"
+                android:elevation="0dp" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
