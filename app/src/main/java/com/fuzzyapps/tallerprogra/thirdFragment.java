@@ -76,7 +76,7 @@ public class thirdFragment extends Fragment {
             String UserName = "tallerprogra";
             String Password = "navia2016 ";
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String cadena = "insert into gfa_torneo(idPais) VALUES('235')";
+            String cadena = "insert into gfa_torneo(idtorneo, idPais) VALUES('1', '235')";
             System.out.println(cadena);
             try{
                 Class.forName(driver).newInstance();
@@ -116,7 +116,7 @@ public class thirdFragment extends Fragment {
             String UserName = "tallerprogra";
             String Password = "navia2016 ";
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String cadena = "insert into gfa_torneo(idPais) VALUES('236')";
+            String cadena = "insert into gfa_torneo(idtorneo, idPais) VALUES('2', '236')";
             System.out.println(cadena);
             try{
                 Class.forName(driver).newInstance();
@@ -156,7 +156,7 @@ public class thirdFragment extends Fragment {
             String UserName = "tallerprogra";
             String Password = "navia2016 ";
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String cadena = "insert into gfa_torneo(idPais) VALUES('78')";
+            String cadena = "insert into gfa_torneo(idtorneo, idPais) VALUES('3', '78')";
             System.out.println(cadena);
             try{
                 Class.forName(driver).newInstance();
@@ -196,7 +196,7 @@ public class thirdFragment extends Fragment {
             String UserName = "tallerprogra";
             String Password = "navia2016 ";
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String cadena = "insert into gfa_torneo(idPais) VALUES('12')";
+            String cadena = "insert into gfa_torneo(idtorneo, idPais) VALUES('4', '12')";
             System.out.println(cadena);
             try{
                 Class.forName(driver).newInstance();
