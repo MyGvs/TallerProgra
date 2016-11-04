@@ -41,9 +41,9 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                //attemptLogin();
-                Intent i = new Intent(LoginActivity.this, activityNavigation.class);
-                startActivity(i);
+                attemptLogin();
+                //Intent i = new Intent(LoginActivity.this, activityNavigation.class);
+                //startActivity(i);
             }
         });
 
@@ -54,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-        new retrieveData().execute();
+        // new retrieveData().execute();
     }
     /**
      * Attempts to sign in or register the account specified by the login form.
@@ -62,7 +62,7 @@ public class LoginActivity extends AppCompatActivity {
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-
+        new loginUser().execute();
     }
     class retrieveData extends AsyncTask<Void, Void, String> {
 
@@ -104,6 +104,58 @@ public class LoginActivity extends AppCompatActivity {
             if (!result.equals("")){
                 //OK
 
+            }
+        }
+    }
+    class loginUser extends AsyncTask<Void, Void, String> {
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+
+        }
+
+        @Override
+        protected String doInBackground(Void... params) {
+            String user = mUserView.getText().toString();
+            String pass = mPasswordView.getText().toString();
+
+            String result = "";
+            String driver = "oracle.jdbc.driver.OracleDriver";
+            String UserName = "tallerprogra";
+            String Password = "navia2016 ";
+            String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
+            String cadena = "select * from GFA_PERSONA where usuario='"+user+"' AND clave='"+pass+"'";
+            try{
+                Class.forName(driver).newInstance();
+                con = DriverManager.getConnection(sourceURL,UserName, Password);
+                Statement st = con.createStatement();
+                ResultSet resultado = st.executeQuery(cadena);
+                System.out.print(cadena);
+                if(resultado.next()){
+                    Log.e("OK", resultado.getString("usuario") + " - "+ resultado.getString("clave"));
+                    result = "ok";
+                }else{
+                    result = "nook";
+                }
+                resultado.close();
+                st.close();
+                con.close();
+            }catch (Exception e){
+                Log.e("ERROR", e.toString());
+                result = "nook";
+            }
+            return result;
+        }
+
+        protected void onPostExecute(String result) {
+            if (result.equals("ok")){
+                //OK
+                Intent i = new Intent(LoginActivity.this, activityNavigation.class);
+                startActivity(i);
+            }else{
+                Toast.makeText(LoginActivity.this, "Usuario o contraseña incorrectos.", Toast.LENGTH_SHORT).show();
             }
         }
     }
