@@ -65,15 +65,12 @@ public class thirdFragment extends Fragment {
         crear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new addTorneoGranBretana().execute();
-                new addTorneoEstadosUnidos().execute();
-                new addTorneoFrancia().execute();
-                new addTorneoAustralia().execute();
-                //new addGrandSlam().execute();
+                new addTorneos().execute();
+                new addGrandSlam().execute();
             }
         });
     }
-    class addTorneoGranBretana extends AsyncTask<Void, Void, String > {
+    class addTorneos extends AsyncTask<Void, Void, String > {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -91,7 +88,8 @@ public class thirdFragment extends Fragment {
             String UserName = "tallerprogra";
             String Password = "navia2016 ";
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String cadena = "insert into gfa_torneo(pais) VALUES('Gran Bretaña')";
+            String cadena = "insert into gfa_torneo(pais)  SELECT 'Gran Bretaña' FROM dual UNION ALL   SELECT 'Estados Unidos' FROM dual UNION ALL   SELECT 'Francia' FROM dual UNION ALL   SELECT 'Australia' FROM dual" +
+                    "";
             System.out.println(cadena);
             try{
                 Class.forName(driver).newInstance();
@@ -111,126 +109,6 @@ public class thirdFragment extends Fragment {
         protected void onPostExecute(String result) {
             //Toast.makeText(getActivity(), "Ocurrió un problema con el registro.", Toast.LENGTH_SHORT).show();
 
-        }
-    }
-    class addTorneoEstadosUnidos extends AsyncTask<Void, Void, String > {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            // Split de variables
-            //Variable del año en String
-            //String anio = year.getText().toString();
-            //Toast.makeText(getActivity(), "Torneo creado "+anio, Toast.LENGTH_SHORT).show();
-            String result = "";
-            String driver = "oracle.jdbc.driver.OracleDriver";
-            String UserName = "tallerprogra";
-            String Password = "navia2016 ";
-            String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String cadena = "insert into gfa_torneo(pais) VALUES('Estados Unidos')";
-            System.out.println(cadena);
-            try{
-                Class.forName(driver).newInstance();
-                con = DriverManager.getConnection(sourceURL,UserName, Password);
-                Statement st = con.createStatement();
-                st.execute(cadena);
-
-                st.close();
-                con.close();
-                result = "ok";
-            }catch (Exception e){
-                Log.e("ERROR", e.toString());
-                result = "";
-            }
-            return result;
-        }
-
-        protected void onPostExecute(String result) {
-            //Toast.makeText(getActivity(), "Ocurrió un problema con el registro.", Toast.LENGTH_SHORT).show();
-        }
-    }
-    class addTorneoFrancia extends AsyncTask<Void, Void, String > {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            // Split de variables
-            //Variable del año en String
-            //String anio = year.getText().toString();
-            //Toast.makeText(getActivity(), "Torneo creado "+anio, Toast.LENGTH_SHORT).show();
-            String result = "";
-            String driver = "oracle.jdbc.driver.OracleDriver";
-            String UserName = "tallerprogra";
-            String Password = "navia2016 ";
-            String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String cadena = "insert into gfa_torneo(pais) VALUES('Francia')";
-            System.out.println(cadena);
-            try{
-                Class.forName(driver).newInstance();
-                con = DriverManager.getConnection(sourceURL,UserName, Password);
-                Statement st = con.createStatement();
-                st.execute(cadena);
-
-                st.close();
-                con.close();
-                result = "ok";
-            }catch (Exception e){
-                Log.e("ERROR", e.toString());
-                result = "";
-            }
-            return result;
-        }
-
-        protected void onPostExecute(String result) {
-            //Toast.makeText(getActivity(), "Ocurrió un problema con el registro.", Toast.LENGTH_SHORT).show();
-        }
-    }
-    class addTorneoAustralia extends AsyncTask<Void, Void, String > {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected String doInBackground(Void... params) {
-            // Split de variables
-            //Variable del año en String
-            //String anio = year.getText().toString();
-            //Toast.makeText(getActivity(), "Torneo creado "+anio, Toast.LENGTH_SHORT).show();
-            String result = "";
-            String driver = "oracle.jdbc.driver.OracleDriver";
-            String UserName = "tallerprogra";
-            String Password = "navia2016 ";
-            String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String cadena = "insert into gfa_torneo(pais) VALUES('Australia')";
-            System.out.println(cadena);
-            try{
-                Class.forName(driver).newInstance();
-                con = DriverManager.getConnection(sourceURL,UserName, Password);
-                Statement st = con.createStatement();
-                st.execute(cadena);
-
-                st.close();
-                con.close();
-                result = "ok";
-            }catch (Exception e){
-                Log.e("ERROR", e.toString());
-                result = "";
-            }
-            return result;
-        }
-
-        protected void onPostExecute(String result) {
-            //Toast.makeText(getActivity(), "Ocurrió un problema con el registro.", Toast.LENGTH_SHORT).show();
         }
     }
     class addGrandSlam extends AsyncTask<Void, Void, String > {
@@ -251,14 +129,23 @@ public class thirdFragment extends Fragment {
             String UserName = "tallerprogra";
             String Password = "navia2016 ";
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-                String cadena = "insert into gfa_grandSlam(anio, idtorneo1, idtorneo2, idtorneo3, idtorneo4) VALUES('"+anio+"', '1', '2', '3','4')";
-            System.out.println(cadena);
+            String cadena1 = "select idtorneo, pais from (SELECT * FROM gfa_torneo ORDER BY idtorneo DESC) WHERE ROWNUM <= 4 ORDER BY ROWNUM DESC";
+            String cadena2 = "insert into gfa_grandSlam(anio, idtorneo1, idtorneo2, idtorneo3, idtorneo4) VALUES('"+anio+"'";
+            //String cadena2 = "insert into gfa_grandSlam(anio, idtorneo1, idtorneo2, idtorneo3, idtorneo4) VALUES('"+anio+"', '1', '2', '3','4')";
+            System.out.println(cadena1);
             try{
                 Class.forName(driver).newInstance();
                 con = DriverManager.getConnection(sourceURL,UserName, Password);
                 Statement st = con.createStatement();
-                st.execute(cadena);
-
+                ResultSet resultado = st.executeQuery(cadena1);
+                while(resultado.next()){
+                    Log.e("OK", resultado.getInt("idtorneo") + " - "+ resultado.getString("pais"));
+                    cadena2 = cadena2 + ", '"+resultado.getInt("idtorneo")+"'";
+                    //this.arraySpinnerCountry.add(resultado.getString("IDPAIS")+"."+resultado.getString("PAIS"));
+                }
+                cadena2 = cadena2 + ")";
+                System.out.println(cadena2);
+                st.execute(cadena2);
                 st.close();
                 con.close();
                 result = "ok";
