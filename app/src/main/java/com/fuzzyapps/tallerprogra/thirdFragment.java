@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 
@@ -29,6 +30,13 @@ public class thirdFragment extends Fragment {
     //SQLite Variables
     Connection con;
 
+    // Ids Torneos
+    private int torneo1;
+    private int torneo2;
+    private int torneo3;
+    private int torneo4;
+    private int torneoAux;
+
     public thirdFragment() {
         // Required empty public constructor
     }
@@ -42,6 +50,13 @@ public class thirdFragment extends Fragment {
     @Override
     public void onViewCreated(final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        // Inicializamos los valores de los id torneo
+        torneo1 = -1;
+        torneo2 = -1;
+        torneo3 = -1;
+        torneo4 = -1;
+        torneoAux = -1;
+
         //AQUI INICIALIZAR LOS OBJETOS
         year = (EditText) view.findViewById(R.id.year);
         crear = (Button) view.findViewById(R.id.createGs);
@@ -54,7 +69,7 @@ public class thirdFragment extends Fragment {
                 new addTorneoEstadosUnidos().execute();
                 new addTorneoFrancia().execute();
                 new addTorneoAustralia().execute();
-                new addGrandSlam().execute();
+                //new addGrandSlam().execute();
             }
         });
     }
@@ -76,14 +91,13 @@ public class thirdFragment extends Fragment {
             String UserName = "tallerprogra";
             String Password = "navia2016 ";
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String cadena = "insert into gfa_torneo(idtorneo, idPais) VALUES('1', '235')";
+            String cadena = "insert into gfa_torneo(pais) VALUES('Gran Bretaña')";
             System.out.println(cadena);
             try{
                 Class.forName(driver).newInstance();
                 con = DriverManager.getConnection(sourceURL,UserName, Password);
                 Statement st = con.createStatement();
                 st.execute(cadena);
-
                 st.close();
                 con.close();
                 result = "ok";
@@ -96,6 +110,7 @@ public class thirdFragment extends Fragment {
 
         protected void onPostExecute(String result) {
             //Toast.makeText(getActivity(), "Ocurrió un problema con el registro.", Toast.LENGTH_SHORT).show();
+
         }
     }
     class addTorneoEstadosUnidos extends AsyncTask<Void, Void, String > {
@@ -116,7 +131,7 @@ public class thirdFragment extends Fragment {
             String UserName = "tallerprogra";
             String Password = "navia2016 ";
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String cadena = "insert into gfa_torneo(idtorneo, idPais) VALUES('2', '236')";
+            String cadena = "insert into gfa_torneo(pais) VALUES('Estados Unidos')";
             System.out.println(cadena);
             try{
                 Class.forName(driver).newInstance();
@@ -156,7 +171,7 @@ public class thirdFragment extends Fragment {
             String UserName = "tallerprogra";
             String Password = "navia2016 ";
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String cadena = "insert into gfa_torneo(idtorneo, idPais) VALUES('3', '78')";
+            String cadena = "insert into gfa_torneo(pais) VALUES('Francia')";
             System.out.println(cadena);
             try{
                 Class.forName(driver).newInstance();
@@ -196,7 +211,7 @@ public class thirdFragment extends Fragment {
             String UserName = "tallerprogra";
             String Password = "navia2016 ";
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String cadena = "insert into gfa_torneo(idtorneo, idPais) VALUES('4', '12')";
+            String cadena = "insert into gfa_torneo(pais) VALUES('Australia')";
             System.out.println(cadena);
             try{
                 Class.forName(driver).newInstance();
@@ -236,7 +251,7 @@ public class thirdFragment extends Fragment {
             String UserName = "tallerprogra";
             String Password = "navia2016 ";
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String cadena = "insert into gfa_grandSlam(anio, idtorneo1, idtorneo2, idtorneo3, idtorneo4) VALUES('"+anio+"', '1', '2', '3','4')";
+                String cadena = "insert into gfa_grandSlam(anio, idtorneo1, idtorneo2, idtorneo3, idtorneo4) VALUES('"+anio+"', '1', '2', '3','4')";
             System.out.println(cadena);
             try{
                 Class.forName(driver).newInstance();
