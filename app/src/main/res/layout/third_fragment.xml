@@ -31,7 +31,7 @@
                         android:layout_height="wrap_content"
                         android:hint="@string/form_year"
                         android:id="@+id/year"
-                        android:inputType="number" />
+                        android:inputType="number|numberSigned" />
                 </android.support.design.widget.TextInputLayout>
 
                 <View style="@style/Divider"/>
@@ -64,7 +64,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_campeon"
-                        android:id="@+id/gb_campeon" />
+                        android:id="@+id/gb_campeon"
+                        android:inputType="numberSigned|numberDecimal" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -76,7 +77,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_final"
-                        android:id="@+id/gb_final" />
+                        android:id="@+id/gb_final"
+                        android:inputType="numberSigned|numberDecimal" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -88,7 +90,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_semifinal"
-                        android:id="@+id/gb_semifinal" />
+                        android:id="@+id/gb_semifinal"
+                        android:inputType="numberSigned|numberDecimal" />
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -100,7 +103,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_cuartos"
-                        android:id="@+id/gb_cuartos" />
+                        android:id="@+id/gb_cuartos"
+                        android:inputType="numberSigned|numberDecimal"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -112,7 +116,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_octavos"
-                        android:id="@+id/gb_octavos" />
+                        android:id="@+id/gb_octavos"
+                        android:inputType="numberSigned|numberDecimal"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -124,7 +129,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_clasificatoria"
-                        android:id="@+id/gb_clasificatoria" />
+                        android:id="@+id/gb_clasificatoria"
+                        android:inputType="numberSigned|numberDecimal"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <View style="@style/Divider"/>
@@ -147,7 +153,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_campeon"
-                        android:id="@+id/usa_Campeon" />
+                        android:id="@+id/usa_Campeon"
+                        android:inputType="numberSigned|numberDecimal"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -159,7 +166,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_final"
-                        android:id="@+id/usa_final" />
+                        android:id="@+id/usa_final"
+                        android:inputType="numberSigned|numberDecimal"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -171,7 +179,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_semifinal"
-                        android:id="@+id/usa_semifinal" />
+                        android:id="@+id/usa_semifinal"
+                        android:inputType="numberSigned|numberDecimal"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -183,7 +192,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_cuartos"
-                        android:id="@+id/usa_cuartos" />
+                        android:id="@+id/usa_cuartos"
+                        android:inputType="numberSigned|numberDecimal"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -195,7 +205,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_octavos"
-                        android:id="@+id/usa_octavos" />
+                        android:id="@+id/usa_octavos"
+                        android:inputType="numberSigned|numberDecimal"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -207,7 +218,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_clasificatoria"
-                        android:id="@+id/usa_clasificatoria" />
+                        android:id="@+id/usa_clasificatoria"
+                        android:inputType="numberSigned|numberDecimal"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <View style="@style/Divider"/>
@@ -230,7 +242,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_campeon"
-                        android:id="@+id/francia_campeon" />
+                        android:id="@+id/francia_campeon"
+                        android:inputType="numberSigned|numberDecimal"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -242,7 +255,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_final"
-                        android:id="@+id/francia_final" />
+                        android:id="@+id/francia_final"
+                        android:inputType="numberSigned|numberDecimal"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -254,7 +268,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_semifinal"
-                        android:id="@+id/francia_semifinal" />
+                        android:id="@+id/francia_semifinal"
+                        android:inputType="numberSigned|numberDecimal"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -266,7 +281,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_cuartos"
-                        android:id="@+id/francia_cuartos" />
+                        android:id="@+id/francia_cuartos"
+                        android:inputType="numberSigned|numberDecimal"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -278,7 +294,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_octavos"
-                        android:id="@+id/francia_octavos" />
+                        android:id="@+id/francia_octavos"
+                        android:inputType="numberSigned|numberDecimal"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -290,7 +307,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_clasificatoria"
-                        android:id="@+id/francia_clasificatoria" />
+                        android:id="@+id/francia_clasificatoria"
+                        android:inputType="numberSigned|numberDecimal"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <View style="@style/Divider"/>
@@ -313,7 +331,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_campeon"
-                        android:id="@+id/australia_ampeon" />
+                        android:id="@+id/australia_campeon"
+                        android:inputType="numberSigned|numberDecimal"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -325,7 +344,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_final"
-                        android:id="@+id/australia_final" />
+                        android:id="@+id/australia_final"
+                        android:inputType="numberSigned|numberDecimal"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -337,7 +357,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_semifinal"
-                        android:id="@+id/australia_semifinal" />
+                        android:id="@+id/australia_semifinal"
+                        android:inputType="numberSigned|numberDecimal"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -349,7 +370,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_cuartos"
-                        android:id="@+id/australia_cuartos" />
+                        android:id="@+id/australia_cuartos"
+                        android:inputType="numberSigned|numberDecimal"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -361,7 +383,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_octavos"
-                        android:id="@+id/australia_octavos" />
+                        android:id="@+id/australia_octavos"
+                        android:inputType="numberSigned|numberDecimal"/>
                 </android.support.design.widget.TextInputLayout>
 
                 <android.support.design.widget.TextInputLayout
@@ -373,7 +396,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/form_clasificatoria"
-                        android:id="@+id/australia_clasificatoria" />
+                        android:id="@+id/australia_clasificatoria"
+                        android:inputType="numberSigned|numberDecimal"/>
                 </android.support.design.widget.TextInputLayout>
                 <Button
                     android:layout_width="match_parent"
