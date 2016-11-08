@@ -262,11 +262,11 @@ public class fifthFragment extends Fragment {
                 }else{
                     if(adapterMatch.get(position).getResultado_a() > adapterMatch.get(position).getResultado_b()){
                         Log.e(adapterMatch.get(position).getIdPartido()+"/", adapterMatch.get(position).getResultado_a() +" > "+adapterMatch.get(position).getResultado_b());
-                        holder.vicder1.setText("VICTORIA");;
+                        holder.vicder1.setText("VICTORIA");
                         holder.vicder1.setVisibility(View.VISIBLE);
                         holder.resultado1.setVisibility(View.VISIBLE);
-                        holder.vicder1.setTextColor(Color.parseColor("#3ADF00"));
-                        holder.resultado1.setTextColor(Color.parseColor("#3ADF00"));
+                        holder.vicder1.setTextColor(Color.parseColor("#31B404"));
+                        holder.resultado1.setTextColor(Color.parseColor("#31B404"));
 
                         holder.vicder2.setText("DERROTA");
                         holder.vicder2.setVisibility(View.VISIBLE);
@@ -284,8 +284,8 @@ public class fifthFragment extends Fragment {
                         holder.vicder2.setText("VICTORIA");
                         holder.vicder2.setVisibility(View.VISIBLE);
                         holder.resultado2.setVisibility(View.VISIBLE);
-                        holder.vicder2.setTextColor(Color.parseColor("#3ADF00"));
-                        holder.resultado2.setTextColor(Color.parseColor("#3ADF00"));
+                        holder.vicder2.setTextColor(Color.parseColor("#31B404"));
+                        holder.resultado2.setTextColor(Color.parseColor("#31B404"));
                     }
 
                 }

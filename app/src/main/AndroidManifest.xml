@@ -23,8 +23,9 @@
         <activity
             android:name=".activityNavigation"
             android:label="@string/title_activity_navigation"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".playerActivity"></activity>
     </application>
 
 </manifest>
