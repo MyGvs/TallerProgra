@@ -129,159 +129,13 @@ public class firstFragment extends Fragment {
     }
     private void retrieveUserType() {
         arraySpinnerUserType.add("1. Jugador");
-        arraySpinnerUserType.add("2. Aebitro");
+        arraySpinnerUserType.add("2. Arbitro");
         arraySpinnerUserType.add("3. Administrador");
         ArrayAdapter<String> genreAdapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, arraySpinnerUserType);
         userType.setAdapter(genreAdapter);
     }
-    class retrieveCountries extends AsyncTask<Void, Void, ArrayList<classPais> > {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-        }
 
-        @Override
-        protected ArrayList<classPais> doInBackground(Void... params) {
-            String result = "";
-            String driver = "oracle.jdbc.driver.OracleDriver";
-            String UserName = "tallerprogra";
-            String Password = "navia2016 ";
-            String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String cadena = "select * from GFA_PAIS order by idpais";
-            ArrayList<classPais> paises = new ArrayList<classPais>();
-            try{
-                Class.forName(driver).newInstance();
-                con = DriverManager.getConnection(sourceURL,UserName, Password);
-                Statement st = con.createStatement();
-                ResultSet resultado = st.executeQuery(cadena);
-                while(resultado.next()){
-                    Log.e("OK", resultado.getInt("IDPAIS") + " - "+ resultado.getString("PAIS"));
-                    classPais pais = new classPais(resultado.getInt("IDPAIS"), resultado.getString("PAIS"));
-                    //this.arraySpinnerCountry.add(resultado.getString("IDPAIS")+"."+resultado.getString("PAIS"));
-                    paises.add(pais);
-                }
-                resultado.close();
-                st.close();
-                con.close();
-                result = "ok";
-            }catch (Exception e){
-                Log.e("ERROR", e.toString());
-                result = "";
-            }
-            return paises;
-        }
-
-        protected void onPostExecute(ArrayList<classPais> result) {
-            for(int i=0 ; i<result.size(); i++){
-                Log.e("Con for", result.get(i).getIdPais()+"");
-                arraySpinnerCountry.add(result.get(i).getIdPais()+"."+result.get(i).getPais());
-            }
-            ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(getActivity(),
-                    android.R.layout.simple_spinner_item, arraySpinnerCountry);
-            country.setAdapter(countryAdapter);
-        }
-    }
-    class retrieveGenre extends AsyncTask<Void, Void, ArrayList<classGenero> > {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected ArrayList<classGenero> doInBackground(Void... params) {
-            String result = "";
-            String driver = "oracle.jdbc.driver.OracleDriver";
-            String UserName = "tallerprogra";
-            String Password = "navia2016 ";
-            String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String cadena = "select * from GFA_GENERO order by idGenero";
-            ArrayList<classGenero> generos = new ArrayList<classGenero>();
-            try{
-                Class.forName(driver).newInstance();
-                con = DriverManager.getConnection(sourceURL,UserName, Password);
-                Statement st = con.createStatement();
-                ResultSet resultado = st.executeQuery(cadena);
-                while(resultado.next()){
-                    Log.e("OK", resultado.getInt("IDGENERO") + " - "+ resultado.getString("GENERO"));
-                    classGenero genero = new classGenero(resultado.getInt("IDGENERO"), resultado.getString("GENERO"));
-                    //this.arraySpinnerCountry.add(resultado.getString("IDPAIS")+"."+resultado.getString("PAIS"));
-                    generos.add(genero);
-                }
-                System.out.println(generos.size());
-                resultado.close();
-                st.close();
-                con.close();
-                result = "ok";
-                return generos;
-            }catch (Exception e){
-                Log.e("ERROR", e.toString());
-                result = "";
-            }
-            return null;
-        }
-
-        protected void onPostExecute(ArrayList<classGenero> result) {
-            for(int i=0 ; i<(int)result.size(); i++){
-                Log.e("Con for", result.get(i).getIdGenero()+"");
-                arraySpinnerGenre.add(result.get(i).getIdGenero()+"."+result.get(i).getGenero());
-            }
-            ArrayAdapter<String> genreAdapter = new ArrayAdapter<String>(getActivity(),
-                    android.R.layout.simple_spinner_item, arraySpinnerGenre);
-            genre.setAdapter(genreAdapter);
-        }
-    }
-    class retrieveUserType extends AsyncTask<Void, Void, ArrayList<classUserType> > {
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-        }
-
-        @Override
-        protected ArrayList<classUserType> doInBackground(Void... params) {
-            String result = "";
-            String driver = "oracle.jdbc.driver.OracleDriver";
-            String UserName = "tallerprogra";
-            String Password = "navia2016 ";
-            String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String cadena = "select * from GFA_T_PERSONA order by idtipopersona";
-            ArrayList<classUserType> tipos = new ArrayList<classUserType>();
-            try{
-                Class.forName(driver).newInstance();
-                con = DriverManager.getConnection(sourceURL,UserName, Password);
-                Statement st = con.createStatement();
-                ResultSet resultado = st.executeQuery(cadena);
-                while(resultado.next()){
-                    Log.e("OK", resultado.getInt("IDTIPOPERSONA") + " - "+ resultado.getString("TIPO"));
-                    classUserType tipo = new classUserType(resultado.getInt("IDTIPOPERSONA"), resultado.getString("TIPO"));
-                    //this.arraySpinnerCountry.add(resultado.getString("IDPAIS")+"."+resultado.getString("PAIS"));
-                    tipos.add(tipo);
-                }
-                System.out.println(tipos.size());
-                resultado.close();
-                st.close();
-                con.close();
-                result = "ok";
-                return tipos;
-            }catch (Exception e){
-                Log.e("ERROR", e.toString());
-                result = "";
-            }
-            return null;
-        }
-
-        protected void onPostExecute(ArrayList<classUserType> result) {
-            for(int i=0 ; i<result.size(); i++){
-                Log.e("Con for", result.get(i).getIdTipoPersona()+"");
-                arraySpinnerUserType.add(result.get(i).getIdTipoPersona()+"."+result.get(i).getTipoPersona());
-            }
-            ArrayAdapter<String> userTypeAdapter = new ArrayAdapter<String>(getActivity(),
-                    android.R.layout.simple_spinner_item, arraySpinnerUserType);
-            userType.setAdapter(userTypeAdapter);
-        }
-    }
     class addPlayer extends AsyncTask<Void, Void, String > {
         @Override
         protected void onPreExecute() {
@@ -292,20 +146,20 @@ public class firstFragment extends Fragment {
         @Override
         protected String doInBackground(Void... params) {
             // Split de variables
-            String[] countrySplit = country.getSelectedItem().toString().split("\\.");
             String[] genreSplit = genre.getSelectedItem().toString().split("\\.");
             String[] userTypeSplit = userType.getSelectedItem().toString().split("\\.");
+            String countrySplit = country.getSelectedItem().toString();
             String result = "";
             String driver = "oracle.jdbc.driver.OracleDriver";
             String UserName = "tallerprogra";
             String Password = "navia2016 ";
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String cadena = "insert into gfa_persona(nombre, apellido, ci, idgenero, idpais, idTipoPersona, usuario, clave" +
+            String cadena = "insert into gfa_persona(nombre, apellido, ci, idgenero, pais, idTipoPersona, usuario, clave" +
                     ") VALUES('"+name.getText().toString()+"' ,"+
                     "'"+last_name1.getText().toString()+" "+last_name2.getText().toString()+"' ,"+
                     ci.getText().toString()+" ,"+
                     genreSplit[0]+" ,"+
-                    countrySplit[0]+" ,"+
+                    "'"+countrySplit+"' ,"+
                     userTypeSplit[0]+" ,"+
                     "'"+user.getText().toString()+"' ,"+
                     "'"+password.getText().toString()+"')";
