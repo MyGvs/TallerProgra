@@ -46,7 +46,7 @@ public class LoginActivity extends AppCompatActivity {
                 //startActivity(i);
             }
         });
-
+        backDoorButton.setVisibility(View.GONE);
         backDoorButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
