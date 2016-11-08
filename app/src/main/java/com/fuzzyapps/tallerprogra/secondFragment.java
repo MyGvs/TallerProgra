@@ -20,6 +20,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Locale;
 
 
 /**
@@ -32,7 +34,7 @@ public class secondFragment extends Fragment {
     private Button individualF, doblesF, individualM, doblesM, doblesMix;
     private LayoutInflater layoutInflater;
     private ArrayAdapter<String> adapterFemenino, adapterFemenino2, adapterMasculino, adapterMasculino2, adapterMixto, adapterMixto2;
-
+    private Spinner country;
     Connection con;
 
     public secondFragment() {
@@ -92,6 +94,7 @@ public class secondFragment extends Fragment {
         View view = layoutInflater.inflate(R.layout.item_registro_individual, null);
         Button register = (Button) view.findViewById(R.id.register);
         final Spinner integranteA = (Spinner) view.findViewById(R.id.integranteA);
+        country = (Spinner) view.findViewById(R.id.country);retrieveCountries();
         final EditText teamName = (EditText) view.findViewById(R.id.teamName);
         adapterFemenino = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayFemenino);
         integranteA.setAdapter(adapterFemenino);
@@ -104,7 +107,7 @@ public class secondFragment extends Fragment {
             public void onClick(View view) {
                 if(!teamName.getText().toString().equals("")){
                     String playerID[] = integranteA.getSelectedItem().toString().split("\\.");
-                    new registerTeam(Integer.parseInt(playerID[0]), teamName.getText().toString(), 1).execute();
+                    new registerTeam(Integer.parseInt(playerID[0]), teamName.getText().toString(), 1, 1, country.getSelectedItem().toString()).execute();
                 }else{
                     Toast.makeText(getActivity(), "Debe ingresar un nombre de equipo.",Toast.LENGTH_SHORT).show();
                 }
@@ -121,6 +124,7 @@ public class secondFragment extends Fragment {
         Button register = (Button) view.findViewById(R.id.register);
         final Spinner integranteA = (Spinner) view.findViewById(R.id.integranteA);
         final Spinner integranteB = (Spinner) view.findViewById(R.id.integranteB);
+        country = (Spinner) view.findViewById(R.id.country);retrieveCountries();
         final EditText teamName = (EditText) view.findViewById(R.id.teamName);
         adapterFemenino = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayFemenino);
         integranteA.setAdapter(adapterFemenino);
@@ -136,7 +140,7 @@ public class secondFragment extends Fragment {
                 if(!teamName.getText().toString().equals("")){
                     String playerID1[] = integranteA.getSelectedItem().toString().split("\\.");
                     String playerID2[] = integranteB.getSelectedItem().toString().split("\\.");
-                    new registerTeam(Integer.parseInt(playerID1[0]), Integer.parseInt(playerID2[0]), teamName.getText().toString(), 2).execute();
+                    new registerTeam(Integer.parseInt(playerID1[0]), Integer.parseInt(playerID2[0]), teamName.getText().toString(), 2, 3, country.getSelectedItem().toString()).execute();
                 }else{
                     Toast.makeText(getActivity(), "Debe ingresar un nombre de equipo.",Toast.LENGTH_SHORT).show();
                 }
@@ -152,6 +156,7 @@ public class secondFragment extends Fragment {
         View view = layoutInflater.inflate(R.layout.item_registro_individual, null);
         Button register = (Button) view.findViewById(R.id.register);
         final Spinner integranteA = (Spinner) view.findViewById(R.id.integranteA);
+        country = (Spinner) view.findViewById(R.id.country);retrieveCountries();
         final EditText teamName = (EditText) view.findViewById(R.id.teamName);
         adapterMasculino = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayMasculino);
         integranteA.setAdapter(adapterMasculino);
@@ -164,7 +169,7 @@ public class secondFragment extends Fragment {
             public void onClick(View view) {
                 if(!teamName.getText().toString().equals("")){
                     String playerID[] = integranteA.getSelectedItem().toString().split("\\.");
-                    new registerTeam(Integer.parseInt(playerID[0]), teamName.getText().toString(), 1).execute();
+                    new registerTeam(Integer.parseInt(playerID[0]), teamName.getText().toString(), 1, 2, country.getSelectedItem().toString()).execute();
                 }else{
                     Toast.makeText(getActivity(), "Debe ingresar un nombre de equipo.",Toast.LENGTH_SHORT).show();
                 }
@@ -181,6 +186,7 @@ public class secondFragment extends Fragment {
         Button register = (Button) view.findViewById(R.id.register);
         final Spinner integranteA = (Spinner) view.findViewById(R.id.integranteA);
         final Spinner integranteB = (Spinner) view.findViewById(R.id.integranteB);
+        country = (Spinner) view.findViewById(R.id.country);retrieveCountries();
         final EditText teamName = (EditText) view.findViewById(R.id.teamName);
         adapterMasculino = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayMasculino);
         integranteA.setAdapter(adapterMasculino);
@@ -196,7 +202,7 @@ public class secondFragment extends Fragment {
                 if(!teamName.getText().toString().equals("")){
                     String playerID1[] = integranteA.getSelectedItem().toString().split("\\.");
                     String playerID2[] = integranteB.getSelectedItem().toString().split("\\.");
-                    new registerTeam(Integer.parseInt(playerID1[0]), Integer.parseInt(playerID2[0]), teamName.getText().toString(), 2).execute();
+                    new registerTeam(Integer.parseInt(playerID1[0]), Integer.parseInt(playerID2[0]), teamName.getText().toString(), 2, 4, country.getSelectedItem().toString()).execute();
                 }else{
                     Toast.makeText(getActivity(), "Debe ingresar un nombre de equipo.",Toast.LENGTH_SHORT).show();
                 }
@@ -213,12 +219,15 @@ public class secondFragment extends Fragment {
         Button register = (Button) view.findViewById(R.id.register);
         final Spinner integranteA = (Spinner) view.findViewById(R.id.integranteA);
         final Spinner integranteB = (Spinner) view.findViewById(R.id.integranteB);
+        country = (Spinner) view.findViewById(R.id.country);retrieveCountries();
+
         final EditText teamName = (EditText) view.findViewById(R.id.teamName);
-        adapterMixto = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayMasculino);
+        adapterMasculino = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayMasculino);
         integranteA.setAdapter(adapterMasculino);
-        adapterMixto2 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayFemenino);
+        adapterFemenino = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayFemenino);
         integranteB.setAdapter(adapterFemenino);
-        new getAllJugador().execute();
+        new getAllMasculino().execute();
+        new getAllFemenino().execute();
         //agregar a los spinners las perosnas
         builder.setView(view);
         final AlertDialog alert = builder.create();
@@ -228,7 +237,7 @@ public class secondFragment extends Fragment {
                 if(!teamName.getText().toString().equals("")){
                     String playerID1[] = integranteA.getSelectedItem().toString().split("\\.");
                     String playerID2[] = integranteB.getSelectedItem().toString().split("\\.");
-                    new registerTeam(Integer.parseInt(playerID1[0]), Integer.parseInt(playerID2[0]), teamName.getText().toString(), 2).execute();
+                    new registerTeam(Integer.parseInt(playerID1[0]), Integer.parseInt(playerID2[0]), teamName.getText().toString(), 2, 5, country.getSelectedItem().toString()).execute();
                 }else{
                     Toast.makeText(getActivity(), "Debe ingresar un nombre de equipo.",Toast.LENGTH_SHORT).show();
                 }
@@ -257,6 +266,20 @@ public class secondFragment extends Fragment {
             adapterMixto2.notifyDataSetChanged();
         }catch (Exception e){}
     }
+    private void retrieveCountries() {
+        Locale[] locales = Locale.getAvailableLocales();
+        ArrayList<String> countries = new ArrayList<String>();
+        for (Locale locale : locales) {
+            String country = locale.getDisplayCountry();
+            if (country.trim().length() > 0 && !countries.contains(country)) {
+                countries.add(country);
+            }
+        }
+        Collections.sort(countries);
+        ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, countries);
+        country.setAdapter(countryAdapter);
+    }
     //APIS
     class getAllMasculino extends AsyncTask<Void, Void, String> {
 
@@ -272,15 +295,15 @@ public class secondFragment extends Fragment {
             String Password = "navia2016 ";
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
             String cadena = "SELECT * FROM gfa_persona a, gfa_t_persona b, gfa_genero c " +
-                    "WHERE a.idgenero = c.idgenero AND a.idTipoPersona = b.idTipoPersona AND a.idgenero=2 AND a.idTipoPersona=1";
+                    "WHERE a.idgenero = c.idgenero AND a.idtipoPersona = b.idtipoPersona AND a.idgenero=2 AND a.idtipoPersona=1";
             try{
                 Class.forName(driver).newInstance();
                 con = DriverManager.getConnection(sourceURL,UserName, Password);
                 Statement st = con.createStatement();
                 ResultSet resultado = st.executeQuery(cadena);
                 while(resultado.next()){
-                    arrayMasculino.add(resultado.getString("idjugador")+". "+resultado.getString("nombre")+" "+resultado.getString("apellido"));
-                    Log.e("got ",""+resultado.getString("idjugador")+". "+resultado.getString("nombre")+" "+resultado.getString("apellido"));
+                    arrayMasculino.add(resultado.getString("idpersona")+". "+resultado.getString("nombre")+" "+resultado.getString("apellido"));
+                    Log.e("got ",""+resultado.getString("idpersona")+". "+resultado.getString("nombre")+" "+resultado.getString("apellido"));
                 }
                 resultado.close();
                 st.close();
@@ -313,14 +336,14 @@ public class secondFragment extends Fragment {
             String Password = "navia2016 ";
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
             String cadena = "SELECT * FROM gfa_persona a, gfa_t_persona b, gfa_genero c " +
-                    "WHERE a.idgenero = c.idgenero AND a.idTipoPersona = b.idTipoPersona AND a.idgenero=1 AND a.idTipoPersona=1";
+                    "WHERE a.idgenero = c.idgenero AND a.idtipoPersona = b.idtipoPersona AND a.idgenero=1 AND a.idtipoPersona=1";
             try{
                 Class.forName(driver).newInstance();
                 con = DriverManager.getConnection(sourceURL,UserName, Password);
                 Statement st = con.createStatement();
                 ResultSet resultado = st.executeQuery(cadena);
                 while(resultado.next()){
-                    arrayFemenino.add(resultado.getString("idjugador")+". "+resultado.getString("nombre")+" "+resultado.getString("apellido"));
+                    arrayFemenino.add(resultado.getString("idpersona")+". "+resultado.getString("nombre")+" "+resultado.getString("apellido"));
                 }
                 resultado.close();
                 st.close();
@@ -354,21 +377,21 @@ public class secondFragment extends Fragment {
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
             //masculino
             String cadena = "SELECT * FROM gfa_persona a, gfa_t_persona b, gfa_genero c " +
-                    "WHERE a.idgenero = c.idgenero AND a.idTipoPersona = b.idTipoPersona AND a.idgenero=2 AND a.idTipoPersona=1";
+                    "WHERE a.idgenero = c.idgenero AND a.idtipoPersona = b.idtipoPersona AND a.idgenero=2 AND a.idtipoPersona=1";
             //femenino
             String cadena2 = "SELECT * FROM gfa_persona a, gfa_t_persona b, gfa_genero c " +
-                    "WHERE a.idgenero = c.idgenero AND a.idTipoPersona = b.idTipoPersona AND a.idgenero=1 AND a.idTipoPersona=1";
+                    "WHERE a.idgenero = c.idgenero AND a.idtipoPersona = b.idtipoPersona AND a.idgenero=1 AND a.idtipoPersona=1";
             try{
                 Class.forName(driver).newInstance();
                 con = DriverManager.getConnection(sourceURL,UserName, Password);
                 Statement st = con.createStatement();
                 ResultSet resultado = st.executeQuery(cadena);
-                ResultSet resultado2 = st.executeQuery(cadena2);
                 while(resultado.next()){
-                    arrayMasculino.add(resultado.getString("idjugador")+". "+resultado.getString("nombre")+" "+resultado.getString("apellido"));
+                    arrayMasculino.add(resultado.getString("idpersona")+". "+resultado.getString("nombre")+" "+resultado.getString("apellido"));
                 }
+                ResultSet resultado2 = st.executeQuery(cadena2);
                 while(resultado2.next()){
-                    arrayFemenino.add(resultado.getString("idjugador")+". "+resultado.getString("nombre")+" "+resultado.getString("apellido"));
+                    arrayFemenino.add(resultado.getString("idpersona")+". "+resultado.getString("nombre")+" "+resultado.getString("apellido"));
                 }
                 resultado.close();
                 st.close();
@@ -391,19 +414,25 @@ public class secondFragment extends Fragment {
         public int idjugador1;
         public int idjugador2;
         public String grupo;
+        public String pais;
+        public int modalidad;
         public int tipo; // tipo 1: un jugador// tipo 2: 2 jugadres
         //tipo 1
-        public registerTeam(int idjugador1, String grupo, int tipo){
+        public registerTeam(int idjugador1, String grupo, int tipo, int modalidad, String pais){
             this.idjugador1 = idjugador1;
             this.grupo = grupo;
             this.tipo = tipo;
+            this.modalidad = modalidad;
+            this.pais = pais;
         }
         //tipo 2
-        public registerTeam(int idjugador1, int idjugador2, String grupo, int tipo){
+        public registerTeam(int idjugador1, int idjugador2, String grupo, int tipo, int modalidad, String pais){
             this.idjugador1 = idjugador1;
             this.idjugador2 = idjugador2;
             this.grupo = grupo;
             this.tipo = tipo;
+            this.modalidad = modalidad;
+            this.pais = pais;
         }
         @Override
         protected void onPreExecute() {
@@ -416,13 +445,13 @@ public class secondFragment extends Fragment {
             String UserName = "tallerprogra";
             String Password = "navia2016 ";
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String queryTeam = "INSERT INTO GFA_GRUPO(NOMBRE_GRUPO) VALUES ('"+grupo+"')";
+            String queryTeam = "INSERT INTO GFA_GRUPO(nombre,pais,idmodalidad) VALUES ('"+grupo+"', '"+pais+"', "+modalidad+")";
             String queryPlayer1 = "";
             String queryPlayer2 = "";
             switch (tipo){
                 case 1:
                     try{
-                        queryPlayer1 = "INSERT INTO GFA_PERGRUPO(idjugador,idgrupo) VALUES ('"+idjugador1+"', (SELECT idgrupo FROM GFA_GRUPO WHERE nombre_grupo='"+grupo+"'))";
+                        queryPlayer1 = "INSERT INTO GFA_PERGRUPO(idpersona,idgrupo) VALUES ('"+idjugador1+"', (SELECT idgrupo FROM GFA_GRUPO WHERE nombre='"+grupo+"'))";
                         Class.forName(driver).newInstance();
                         con = DriverManager.getConnection(sourceURL,UserName, Password);
                         Statement st = con.createStatement();
@@ -438,8 +467,8 @@ public class secondFragment extends Fragment {
                     break;
                 case 2:
                     try{
-                        queryPlayer1 = "INSERT INTO GFA_PERGRUPO(idjugador,idgrupo) VALUES ('"+idjugador1+"', (SELECT idgrupo FROM GFA_GRUPO WHERE nombre_grupo='"+grupo+"'))";
-                        queryPlayer2 = "INSERT INTO GFA_PERGRUPO(idjugador,idgrupo) VALUES ('"+idjugador2+"', (SELECT idgrupo FROM GFA_GRUPO WHERE nombre_grupo='"+grupo+"'))";
+                        queryPlayer1 = "INSERT INTO GFA_PERGRUPO(idpersona,idgrupo) VALUES ('"+idjugador1+"', (SELECT idgrupo FROM GFA_GRUPO WHERE nombre='"+grupo+"'))";
+                        queryPlayer2 = "INSERT INTO GFA_PERGRUPO(idpersona,idgrupo) VALUES ('"+idjugador2+"', (SELECT idgrupo FROM GFA_GRUPO WHERE nombre='"+grupo+"'))";
                         Class.forName(driver).newInstance();
                         con = DriverManager.getConnection(sourceURL,UserName, Password);
                         Statement st = con.createStatement();

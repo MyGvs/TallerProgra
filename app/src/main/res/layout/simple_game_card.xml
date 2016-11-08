@@ -63,6 +63,7 @@
                     android:textColor="@color/lose"
                     android:padding="3dp"
                     android:visibility="gone"
+                    android:textSize="35dp"
                     android:text="3" />
                 <TextView
                     android:id="@+id/vicder2"
@@ -96,6 +97,7 @@
                     android:textColor="@color/victory"
                     android:padding="3dp"
                     android:visibility="gone"
+                    android:textSize="35dp"
                     android:text="6" />
                 <TextView
                     android:id="@+id/vicder1"

@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,10 +36,15 @@ import java.util.Map;
  * A simple {@link Fragment} subclass.
  */
 public class fifthFragment extends Fragment {
+    private int selectedItem;
     private RecyclerView mRecyclerView;
     private android.support.v7.widget.RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private LayoutInflater layoutInflater;
+    private Spinner modalidad, fase;
+    private ArrayList<String> arrayModalidad = new ArrayList<String>();
+    private ArrayList<String> arrayFase = new ArrayList<String>();
+    private Button buscar;
     Connection con;
     ArrayList<Match> matchesArrayList = new ArrayList<>();
     public fifthFragment() {
@@ -55,6 +61,9 @@ public class fifthFragment extends Fragment {
     public void onViewCreated(final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         layoutInflater = getActivity().getLayoutInflater();
+        buscar = (Button) view.findViewById(R.id.buscar);
+        modalidad = (Spinner) view.findViewById(R.id.modalidad);
+        fase = (Spinner) view.findViewById(R.id.fase);
         //AQUI INICIALIZAR LOS OBJETOS
         mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycler_view);
         // use this setting to improve performance if you know that changes
@@ -73,13 +82,57 @@ public class fifthFragment extends Fragment {
 
             }
         });*/
+        arrayFase.add("1. Campeon");
+        arrayFase.add("2. Final");
+        arrayFase.add("3. Semifinal");
+        arrayFase.add("4. Cuartos de final");
+        arrayFase.add("5. Octavos de final");
+        arrayFase.add("6. Clasificatoria");
+        ArrayAdapter<String> adapterFase = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayFase);
+        fase.setAdapter(adapterFase);
 
-        new getPartida("").execute();
+        arrayModalidad.add("1. Individual Femenino");
+        arrayModalidad.add("2. Individual Masculino");
+        arrayModalidad.add("3. Dobles Femenino");
+        arrayModalidad.add("4. Dobles Masculino");
+        arrayModalidad.add("5. Dobles Mixtos");
+        ArrayAdapter<String> adapterModalidad = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayModalidad);
+        modalidad.setAdapter(adapterModalidad);
+        fase.setSelection(5);
+
+
+        buscar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                matchesArrayList.clear();
+                listarTodos();
+                String modalidadSplit[] = modalidad.getSelectedItem().toString().split("\\.");
+                String faseSplit[] = fase.getSelectedItem().toString().split("\\.");
+                //Toast.makeText(getActivity(), modalidadSplit[0] + " - " + faseSplit[0], Toast.LENGTH_SHORT).show();
+                new getPartida(Integer.parseInt(modalidadSplit[0]), Integer.parseInt(faseSplit[0])).execute();
+            }
+        });
+        /*fase.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //Toast.makeText(getActivity(),""+position,Toast.LENGTH_SHORT).show();
+                String modalidadSplit[] = modalidad.getSelectedItem().toString().split("\\.");
+                String faseSplit[] = fase.getItemAtPosition(position).toString().split("\\.");
+                //Toast.makeText(getActivity(), modalidadSplit[0] + " - " + faseSplit[0], Toast.LENGTH_SHORT).show();
+                new getPartida(Integer.parseInt(modalidadSplit[0]), Integer.parseInt(faseSplit[0])).execute();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });*/
     }
     class getPartida extends AsyncTask<Void, Void, String> {
-        String idModalidad;
-        public getPartida(String idModalidad){
+        int idModalidad, idFase;
+        public getPartida(int idModalidad, int idFase){
             this.idModalidad = idModalidad;
+            this.idFase = idFase;
         }
         @Override
         protected void onPreExecute() {
@@ -94,9 +147,9 @@ public class fifthFragment extends Fragment {
             String UserName = "tallerprogra";
             String Password = "navia2016 ";
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String cadena = "SELECT a.idpartido, a.fecha, a.resultado_a, a.resultado_b, b.nombre_grupo as gp1, b2.nombre_grupo as gp2 " +
-                    "FROM gfa_partido a, gfa_grupo b, gfa_grupo b2, gfa_modalidad c, gfa_torneoMod d " +
-                    "WHERE a.idgrupo1 = b.idgrupo AND a.idgrupo2 = b2.idgrupo AND a.idTorneoMod = d.idTorneoMod AND d.idmodalidad = c.idmodalidad AND c.idmodalidad = 2";//"+idModalidad;
+            String cadena = "SELECT a.idpartido, a.fecha, a.resultado_a, a.resultado_b, b.nombre as gp1, b2.nombre as gp2 " +
+                    "FROM gfa_partido a, gfa_grupo b, gfa_grupo b2, gfa_modalidad c, gfa_fase d " +
+                    "WHERE a.idgrupoA = b.idgrupo AND a.idgrupoB = b2.idgrupo AND b.idmodalidad = c.idmodalidad AND c.idmodalidad = "+idModalidad+" AND a.idfase = d.idfase AND d.idfase = "+idFase+" ";
             try {
                 Class.forName(driver).newInstance();
                 con = DriverManager.getConnection(sourceURL, UserName, Password);
@@ -160,6 +213,7 @@ public class fifthFragment extends Fragment {
 
         // Provide a suitable constructor (depends on the kind of dataset)
         public MatchAdapter(ArrayList<Match> matchArray) {
+            this.adapterMatch.clear();
             this.adapterMatch = matchArray;
         }
 
@@ -181,6 +235,7 @@ public class fifthFragment extends Fragment {
             holder.registrar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    selectedItem = position;
                     showModifyDialog(adapterMatch.get(position).getIdPartido(), adapterMatch.get(position).getNombreGrupo1(), adapterMatch.get(position).getNombreGrupo2());
                 }
             });
@@ -190,7 +245,9 @@ public class fifthFragment extends Fragment {
             holder.resultado1.setText(adapterMatch.get(position).getResultado_a()+"");
             holder.resultado2.setText(adapterMatch.get(position).getResultado_b()+"");
             if(adapterMatch.get(position).getResultado_a() != (-1) && adapterMatch.get(position).getResultado_b() != (-1)){
+                Log.e(adapterMatch.get(position).getIdPartido()+"/", adapterMatch.get(position).getResultado_a()+" es distinto de -1 ");
                 if(adapterMatch.get(position).getResultado_a() == adapterMatch.get(position).getResultado_b()){
+                    Log.e(adapterMatch.get(position).getIdPartido()+"/", adapterMatch.get(position).getResultado_a()+" - "+adapterMatch.get(position).getResultado_b());
                     holder.vicder1.setText("EMPATE");
                     holder.vicder1.setVisibility(View.VISIBLE);
                     holder.resultado1.setVisibility(View.VISIBLE);
@@ -204,11 +261,12 @@ public class fifthFragment extends Fragment {
                     holder.resultado2.setTextColor(Color.parseColor("#f9a825"));
                 }else{
                     if(adapterMatch.get(position).getResultado_a() > adapterMatch.get(position).getResultado_b()){
+                        Log.e(adapterMatch.get(position).getIdPartido()+"/", adapterMatch.get(position).getResultado_a() +" > "+adapterMatch.get(position).getResultado_b());
                         holder.vicder1.setText("VICTORIA");;
                         holder.vicder1.setVisibility(View.VISIBLE);
                         holder.resultado1.setVisibility(View.VISIBLE);
-                        holder.vicder1.setTextColor(Color.parseColor("#33691e"));
-                        holder.resultado1.setTextColor(Color.parseColor("#33691e"));
+                        holder.vicder1.setTextColor(Color.parseColor("#3ADF00"));
+                        holder.resultado1.setTextColor(Color.parseColor("#3ADF00"));
 
                         holder.vicder2.setText("DERROTA");
                         holder.vicder2.setVisibility(View.VISIBLE);
@@ -216,6 +274,7 @@ public class fifthFragment extends Fragment {
                         holder.vicder2.setTextColor(Color.parseColor("#d32f2f"));
                         holder.resultado2.setTextColor(Color.parseColor("#d32f2f"));
                     }else {
+                        Log.e(adapterMatch.get(position).getIdPartido()+"/", adapterMatch.get(position).getResultado_a() +" < "+adapterMatch.get(position).getResultado_b());
                         holder.vicder1.setText("DERROTA");
                         holder.vicder1.setVisibility(View.VISIBLE);
                         holder.resultado1.setVisibility(View.VISIBLE);
@@ -225,13 +284,19 @@ public class fifthFragment extends Fragment {
                         holder.vicder2.setText("VICTORIA");
                         holder.vicder2.setVisibility(View.VISIBLE);
                         holder.resultado2.setVisibility(View.VISIBLE);
-                        holder.vicder2.setTextColor(Color.parseColor("#33691e"));
-                        holder.resultado2.setTextColor(Color.parseColor("#33691e"));
+                        holder.vicder2.setTextColor(Color.parseColor("#3ADF00"));
+                        holder.resultado2.setTextColor(Color.parseColor("#3ADF00"));
                     }
 
                 }
-            }
+            }else{
+                Log.e(adapterMatch.get(position).getIdPartido()+"/", adapterMatch.get(position).getResultado_a()+" es igual a -1 ");
+                holder.vicder1.setVisibility(View.GONE);
+                holder.resultado1.setVisibility(View.GONE);
 
+                holder.vicder2.setVisibility(View.GONE);
+                holder.resultado2.setVisibility(View.GONE);
+            }
         }
 
         // Return the size of your dataset (invoked by the layout manager)
@@ -281,7 +346,14 @@ public class fifthFragment extends Fragment {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if(s.equals("ok")){
-                new getPartida("").execute();
+                matchesArrayList.get(selectedItem).setResultado_a(Integer.parseInt(resultado_a));
+                matchesArrayList.get(selectedItem).setResultado_b(Integer.parseInt(resultado_b));
+                listarTodos();
+                /*String modalidadSplit[] = modalidad.getSelectedItem().toString().split("\\.");
+                String faseSplit[] = fase.getSelectedItem().toString().split("\\.");
+                new getPartida(Integer.parseInt(modalidadSplit[0]), Integer.parseInt(faseSplit[0])).execute();*/
+                //new getPartida("").execute();
+
             }
         }
     }

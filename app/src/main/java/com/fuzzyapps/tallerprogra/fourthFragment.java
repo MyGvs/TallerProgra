@@ -142,23 +142,25 @@ public class fourthFragment extends Fragment {
         }
 
         protected void onPostExecute(ArrayList<classGrupo> result) {
-            for(int i=0 ; i<result.size(); i++){
-                Log.e("Con for", result.get(i).getIdGrupo()+"");
-                arraySpinnerGrupoA.add(result.get(i).getIdGrupo()+"."+result.get(i).getGrupo());
-                arraySpinnerGrupoB.add(result.get(i).getIdGrupo()+"."+result.get(i).getGrupo());
-                arraySpinnerGrupoAr.add(result.get(i).getIdGrupo()+"."+result.get(i).getGrupo());
-            }
-            ArrayAdapter<String> teamAAdapter = new ArrayAdapter<String>(getActivity(),
-                    android.R.layout.simple_spinner_item, arraySpinnerGrupoA);
-            grupo_a.setAdapter(teamAAdapter);
+            try {
+                for (int i = 0; i < result.size(); i++) {
+                    Log.e("Con for", result.get(i).getIdGrupo() + "");
+                    arraySpinnerGrupoA.add(result.get(i).getIdGrupo() + "." + result.get(i).getGrupo());
+                    arraySpinnerGrupoB.add(result.get(i).getIdGrupo() + "." + result.get(i).getGrupo());
+                    arraySpinnerGrupoAr.add(result.get(i).getIdGrupo() + "." + result.get(i).getGrupo());
+                }
+                ArrayAdapter<String> teamAAdapter = new ArrayAdapter<String>(getActivity(),
+                        android.R.layout.simple_spinner_item, arraySpinnerGrupoA);
+                grupo_a.setAdapter(teamAAdapter);
 
-            ArrayAdapter<String> teamBAdapter = new ArrayAdapter<String>(getActivity(),
-                    android.R.layout.simple_spinner_item, arraySpinnerGrupoB);
-            grupo_b.setAdapter(teamBAdapter);
+                ArrayAdapter<String> teamBAdapter = new ArrayAdapter<String>(getActivity(),
+                        android.R.layout.simple_spinner_item, arraySpinnerGrupoB);
+                grupo_b.setAdapter(teamBAdapter);
 
-            ArrayAdapter<String> teamArbAdapter = new ArrayAdapter<String>(getActivity(),
-                    android.R.layout.simple_spinner_item, arraySpinnerGrupoAr);
-            grupo_ar.setAdapter(teamArbAdapter);
+                ArrayAdapter<String> teamArbAdapter = new ArrayAdapter<String>(getActivity(),
+                        android.R.layout.simple_spinner_item, arraySpinnerGrupoAr);
+                grupo_ar.setAdapter(teamArbAdapter);
+            }catch (Exception e){}
         }
     }
     class retrieveModalidades extends AsyncTask<Void, Void, ArrayList<classModalidad> > {
