@@ -26,7 +26,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
+import java.util.Locale;
 import java.util.NoSuchElementException;
 
 import static com.fuzzyapps.tallerprogra.R.id.countryText;
@@ -97,9 +99,41 @@ public class firstFragment extends Fragment {
             }
         });
 
-        new retrieveCountries().execute();
-        new retrieveGenre().execute();
-        new retrieveUserType().execute();
+        //new retrieveCountries().execute();
+        retrieveCountries();
+        //new retrieveGenre().execute();
+        retrieveGenre();
+        //new retrieveUserType().execute();
+        retrieveUserType();
+    }
+    private void retrieveCountries() {
+        Locale[] locales = Locale.getAvailableLocales();
+        ArrayList<String> countries = new ArrayList<String>();
+        for (Locale locale : locales) {
+            String country = locale.getDisplayCountry();
+            if (country.trim().length() > 0 && !countries.contains(country)) {
+                countries.add(country);
+            }
+        }
+        Collections.sort(countries);
+        ArrayAdapter<String> countryAdapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, countries);
+        country.setAdapter(countryAdapter);
+    }
+    private void retrieveGenre() {
+        arraySpinnerGenre.add("1. Femenino");
+        arraySpinnerGenre.add("2. Masculino");
+        ArrayAdapter<String> genreAdapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, arraySpinnerGenre);
+        genre.setAdapter(genreAdapter);
+    }
+    private void retrieveUserType() {
+        arraySpinnerUserType.add("1. Jugador");
+        arraySpinnerUserType.add("2. Arbitro");
+        arraySpinnerUserType.add("3. asdasd");
+        ArrayAdapter<String> genreAdapter = new ArrayAdapter<String>(getActivity(),
+                android.R.layout.simple_spinner_item, arraySpinnerUserType);
+        userType.setAdapter(genreAdapter);
     }
     class retrieveCountries extends AsyncTask<Void, Void, ArrayList<classPais> > {
         @Override

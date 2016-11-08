@@ -34,7 +34,7 @@ public class activityNavigation extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.frame_layout, new fifthFragment())
+                .replace(R.id.frame_layout, new firstFragment())
                 .commit();
     }
 

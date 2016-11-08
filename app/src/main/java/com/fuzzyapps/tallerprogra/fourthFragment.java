@@ -247,13 +247,15 @@ public class fourthFragment extends Fragment {
         }
 
         protected void onPostExecute(ArrayList<classLugar> result) {
-            for(int i=0 ; i<result.size(); i++){
-                Log.e("Con for", result.get(i).getIdLugar()+"");
-                arraySpinnerLugar.add(result.get(i).getIdLugar()+"."+result.get(i).getLugar());
-            }
-            ArrayAdapter<String> lugares = new ArrayAdapter<String>(getActivity(),
-                    android.R.layout.simple_spinner_item, arraySpinnerLugar);
-            lugar_e.setAdapter(lugares);
+            try {
+                for (int i = 0; i < result.size(); i++) {
+                    Log.e("Con for", result.get(i).getIdLugar() + "");
+                    arraySpinnerLugar.add(result.get(i).getIdLugar() + "." + result.get(i).getLugar());
+                }
+                ArrayAdapter<String> lugares = new ArrayAdapter<String>(getActivity(),
+                        android.R.layout.simple_spinner_item, arraySpinnerLugar);
+                lugar_e.setAdapter(lugares);
+            }catch (Exception e){}
 
         }
     }

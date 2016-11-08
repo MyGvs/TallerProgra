@@ -206,7 +206,7 @@ public class secondFragment extends Fragment {
         alert.show();
     }
     private void desplegarDialogoDoblesMixto() {
-        arrayMixto.clear();
+        arrayMixto.clear();arrayFemenino.clear();arrayMasculino.clear();
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("CREAR EQUIPO DOBLES MIXTO");
         View view = layoutInflater.inflate(R.layout.item_registro_dobles, null);
@@ -214,10 +214,10 @@ public class secondFragment extends Fragment {
         final Spinner integranteA = (Spinner) view.findViewById(R.id.integranteA);
         final Spinner integranteB = (Spinner) view.findViewById(R.id.integranteB);
         final EditText teamName = (EditText) view.findViewById(R.id.teamName);
-        adapterMixto = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayMixto);
-        integranteA.setAdapter(adapterMixto);
-        adapterMixto2 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayMixto);
-        integranteB.setAdapter(adapterMixto2);
+        adapterMixto = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayMasculino);
+        integranteA.setAdapter(adapterMasculino);
+        adapterMixto2 = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, arrayFemenino);
+        integranteB.setAdapter(adapterFemenino);
         new getAllJugador().execute();
         //agregar a los spinners las perosnas
         builder.setView(view);
@@ -352,15 +352,23 @@ public class secondFragment extends Fragment {
             String UserName = "tallerprogra";
             String Password = "navia2016 ";
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
+            //masculino
             String cadena = "SELECT * FROM gfa_persona a, gfa_t_persona b, gfa_genero c " +
-                    "WHERE a.idgenero = c.idgenero AND a.idTipoPersona = b.idTipoPersona AND a.idTipoPersona=1";
+                    "WHERE a.idgenero = c.idgenero AND a.idTipoPersona = b.idTipoPersona AND a.idgenero=2 AND a.idTipoPersona=1";
+            //femenino
+            String cadena2 = "SELECT * FROM gfa_persona a, gfa_t_persona b, gfa_genero c " +
+                    "WHERE a.idgenero = c.idgenero AND a.idTipoPersona = b.idTipoPersona AND a.idgenero=1 AND a.idTipoPersona=1";
             try{
                 Class.forName(driver).newInstance();
                 con = DriverManager.getConnection(sourceURL,UserName, Password);
                 Statement st = con.createStatement();
                 ResultSet resultado = st.executeQuery(cadena);
+                ResultSet resultado2 = st.executeQuery(cadena2);
                 while(resultado.next()){
-                    arrayMixto.add(resultado.getString("idjugador")+". "+resultado.getString("nombre")+" "+resultado.getString("apellido"));
+                    arrayMasculino.add(resultado.getString("idjugador")+". "+resultado.getString("nombre")+" "+resultado.getString("apellido"));
+                }
+                while(resultado2.next()){
+                    arrayFemenino.add(resultado.getString("idjugador")+". "+resultado.getString("nombre")+" "+resultado.getString("apellido"));
                 }
                 resultado.close();
                 st.close();
