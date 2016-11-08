@@ -329,6 +329,12 @@ public class fourthFragment extends Fragment {
         protected void onPostExecute(String result) {
             if(result.equals("ok")){
                 Toast.makeText(getActivity(), "Se registro correctamente.", Toast.LENGTH_SHORT).show();
+                grupo_a.setSelection(0);
+                grupo_b.setSelection(0);
+                grupo_ar.setSelection(0);
+                lugar_e.setText("");
+                fase.setSelection(0);
+                torneo.setSelection(0);
             }else{
                 Toast.makeText(getActivity(), "Ocurrio un error.", Toast.LENGTH_SHORT).show();
             }
