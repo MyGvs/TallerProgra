@@ -135,7 +135,11 @@ public class LoginActivity extends AppCompatActivity {
                 System.out.print(cadena);
                 if(resultado.next()){
                     Log.e("OK", resultado.getString("usuario") + " - "+ resultado.getString("clave"));
-                    result = "ok";
+                    if(resultado.getInt("IDTIPOPERSONA") == 1)result = "usuario";
+                    else if(resultado.getInt("IDTIPOPERSONA") == 3)result = "admin";
+                    else{
+                        result = "nook";
+                    }
                 }else{
                     result = "nook";
                 }
@@ -150,12 +154,15 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(String result) {
-            if (result.equals("ok")){
-                //OK
+            if (result.equals("nook")){
+                Toast.makeText(LoginActivity.this, "Usuario o contraseña incorrectos.", Toast.LENGTH_SHORT).show();
+
+            }else if(result.equals("usuario")){
+                Intent i = new Intent(LoginActivity.this, playerActivity.class);
+                startActivity(i);
+            }else if(result.equals("admin")){
                 Intent i = new Intent(LoginActivity.this, activityNavigation.class);
                 startActivity(i);
-            }else{
-                Toast.makeText(LoginActivity.this, "Usuario o contraseña incorrectos.", Toast.LENGTH_SHORT).show();
             }
         }
     }
