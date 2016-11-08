@@ -5,47 +5,417 @@
     tools:context="com.fuzzyapps.tallerprogra.firstFragment">
 
     <!-- TODO: Update blank fragment layout -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:text="@string/form_title_gs"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/textView3"
-                android:enabled="false"
-                android:gravity="center_horizontal"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:layout_weight="1" />
-            <android.support.design.widget.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <EditText
+                android:orientation="vertical">
+                <TextView
+                    android:text="@string/form_title_gs"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/form_year"
-                    android:id="@+id/year"
-                    android:inputType="number" />
-            </android.support.design.widget.TextInputLayout>
+                    android:id="@+id/tituloGS"
+                    android:enabled="false"
+                    android:gravity="center_horizontal"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:layout_weight="1" />
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minWidth="88dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:paddingLeft="16dp"
-                android:paddingRight="16dp"
-                android:text="@string/form_create_gs"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/createGs"
-                android:textColor="@color/textButtons"
-                android:theme="@style/MaterialButton"
-                android:layout_below="@+id/filtro"
-                android:layout_centerHorizontal="true"/>
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_year"
+                        android:id="@+id/year"
+                        android:inputType="number|numberSigned" />
+                </android.support.design.widget.TextInputLayout>
 
-        </LinearLayout>
+                <View style="@style/Divider"/>
+
+                <TextView
+                    android:text="Premios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tituloPremios"
+                    android:enabled="false"
+                    android:layout_weight="1"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:gravity="center_horizontal" />
+
+                <TextView
+                    android:text="@string/form_gb"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/granBretania"
+                    android:enabled="false"
+                    android:layout_weight="1"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_campeon"
+                        android:id="@+id/gb_campeon"
+                        android:inputType="numberSigned|numberDecimal" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_final"
+                        android:id="@+id/gb_final"
+                        android:inputType="numberSigned|numberDecimal" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_semifinal"
+                        android:id="@+id/gb_semifinal"
+                        android:inputType="numberSigned|numberDecimal" />
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_cuartos"
+                        android:id="@+id/gb_cuartos"
+                        android:inputType="numberSigned|numberDecimal"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_octavos"
+                        android:id="@+id/gb_octavos"
+                        android:inputType="numberSigned|numberDecimal"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_clasificatoria"
+                        android:id="@+id/gb_clasificatoria"
+                        android:inputType="numberSigned|numberDecimal"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <View style="@style/Divider"/>
+
+            <TextView
+                    android:text="@string/form_usa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/estadosUnidos"
+                    android:enabled="false"
+                    android:layout_weight="1"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_campeon"
+                        android:id="@+id/usa_campeon"
+                        android:inputType="numberSigned|numberDecimal"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_final"
+                        android:id="@+id/usa_final"
+                        android:inputType="numberSigned|numberDecimal"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_semifinal"
+                        android:id="@+id/usa_semifinal"
+                        android:inputType="numberSigned|numberDecimal"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_cuartos"
+                        android:id="@+id/usa_cuartos"
+                        android:inputType="numberSigned|numberDecimal"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_octavos"
+                        android:id="@+id/usa_octavos"
+                        android:inputType="numberSigned|numberDecimal"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_clasificatoria"
+                        android:id="@+id/usa_clasificatoria"
+                        android:inputType="numberSigned|numberDecimal"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <View style="@style/Divider"/>
+
+                <TextView
+                    android:text="@string/form_francia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/francia"
+                    android:enabled="false"
+                    android:layout_weight="1"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_campeon"
+                        android:id="@+id/fr_campeon"
+                        android:inputType="numberSigned|numberDecimal"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_final"
+                        android:id="@+id/fr_final"
+                        android:inputType="numberSigned|numberDecimal"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_semifinal"
+                        android:id="@+id/fr_semifinal"
+                        android:inputType="numberSigned|numberDecimal"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_cuartos"
+                        android:id="@+id/fr_cuartos"
+                        android:inputType="numberSigned|numberDecimal"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_octavos"
+                        android:id="@+id/fr_octavos"
+                        android:inputType="numberSigned|numberDecimal"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_clasificatoria"
+                        android:id="@+id/fr_clasificatoria"
+                        android:inputType="numberSigned|numberDecimal"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <View style="@style/Divider"/>
+
+                <TextView
+                    android:text="@string/form_australia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/australia"
+                    android:enabled="false"
+                    android:layout_weight="1"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_campeon"
+                        android:id="@+id/aus_campeon"
+                        android:inputType="numberSigned|numberDecimal"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_final"
+                        android:id="@+id/aus_final"
+                        android:inputType="numberSigned|numberDecimal"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_semifinal"
+                        android:id="@+id/aus_semifinal"
+                        android:inputType="numberSigned|numberDecimal"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_cuartos"
+                        android:id="@+id/aus_cuartos"
+                        android:inputType="numberSigned|numberDecimal"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_octavos"
+                        android:id="@+id/aus_octavos"
+                        android:inputType="numberSigned|numberDecimal"/>
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/form_clasificatoria"
+                        android:id="@+id/aus_clasificatoria"
+                        android:inputType="numberSigned|numberDecimal"/>
+                </android.support.design.widget.TextInputLayout>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minWidth="88dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:text="@string/form_create_gs"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:id="@+id/createGs"
+                    android:textColor="@color/textButtons"
+                    android:theme="@style/MaterialButton"
+                    android:layout_below="@+id/filtro"
+                    android:layout_centerHorizontal="true"/>
+
+            </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

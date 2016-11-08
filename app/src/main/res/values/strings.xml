@@ -38,8 +38,23 @@
 
     <!-- Hints para Grand Slam de crear jugador -->
     <string name="form_title_gs"> Crear Grand Slam </string>
+    <!-- Torneos -->
+    <string name="form_gb"> Gran Bretaña </string>
+    <string name="form_usa"> Estados Unidos </string>
+    <string name="form_francia"> Francia </string>
+    <string name="form_australia"> Australia </string>
+
+    <!-- Torneos -->
+    <string name="form_campeon"> Campeón </string>
+    <string name="form_final"> Final </string>
+    <string name="form_semifinal"> Semifinal </string>
+    <string name="form_cuartos"> Cuartos de final </string>
+    <string name="form_octavos"> Octavos de final </string>
+    <string name="form_clasificatoria"> Fase clasificatoria </string>
+
     <string name="form_year"> Año </string>
     <string name="form_create_gs"> CREAR </string>
+
     <!-- Hints para registrar  Partido -->
     <string name="form_title_match"> Registrar Partido</string>
     <string name="form_team_a"> Grupo A </string>
@@ -49,4 +64,5 @@
     <string name="form_place"> Lugar de encuentro </string>
     <string name="form_team_referee"> Grupo Arbitros </string>
     <string name="form_modality"> Modalidad </string>
+
 </resources>
