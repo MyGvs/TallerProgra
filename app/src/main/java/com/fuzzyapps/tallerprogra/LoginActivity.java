@@ -41,6 +41,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
+                loginButton.setEnabled(false);
                 attemptLogin();
                 //Intent i = new Intent(LoginActivity.this, activityNavigation.class);
                 //startActivity(i);
@@ -109,7 +110,6 @@ public class LoginActivity extends AppCompatActivity {
     }
     class loginUser extends AsyncTask<Void, Void, String> {
 
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -134,6 +134,9 @@ public class LoginActivity extends AppCompatActivity {
                 ResultSet resultado = st.executeQuery(cadena);
                 System.out.print(cadena);
                 if(resultado.next()){
+                    Globals.idPersona = resultado.getString("idpersona");
+                    Globals.nombre = resultado.getString("nombre");
+                    Globals.apellido = resultado.getString("apellido");
                     Log.e("OK", resultado.getString("usuario") + " - "+ resultado.getString("clave"));
                     if(resultado.getInt("IDTIPOPERSONA") == 1)result = "usuario";
                     else if(resultado.getInt("IDTIPOPERSONA") == 3)result = "admin";
@@ -154,6 +157,7 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         protected void onPostExecute(String result) {
+            loginButton.setEnabled(true);
             if (result.equals("nook")){
                 Toast.makeText(LoginActivity.this, "Usuario o contraseña incorrectos.", Toast.LENGTH_SHORT).show();
 
