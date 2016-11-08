@@ -129,8 +129,8 @@ public class firstFragment extends Fragment {
     }
     private void retrieveUserType() {
         arraySpinnerUserType.add("1. Jugador");
-        arraySpinnerUserType.add("2. Arbitro");
-        arraySpinnerUserType.add("3. asdasd");
+        arraySpinnerUserType.add("2. Aebitro");
+        arraySpinnerUserType.add("3. Administrador");
         ArrayAdapter<String> genreAdapter = new ArrayAdapter<String>(getActivity(),
                 android.R.layout.simple_spinner_item, arraySpinnerUserType);
         userType.setAdapter(genreAdapter);
