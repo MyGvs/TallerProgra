@@ -38,9 +38,10 @@ public class fourthFragment extends Fragment {
     private Spinner grupo_a;
     private Spinner grupo_b;
     private DatePicker fecha;
-    private Spinner lugar_e;
+    private EditText lugar_e;
     private Spinner grupo_ar;
-    private Spinner modalidad;
+    private Spinner torneo;
+    private Spinner fase;
     private Button registerButton;
 
     // Instancias de Clases
@@ -50,9 +51,9 @@ public class fourthFragment extends Fragment {
     // Spinner arrays
     private ArrayList<String> arraySpinnerGrupoA;
     private ArrayList<String> arraySpinnerGrupoB;
-    private ArrayList<String> arraySpinnerLugar;
     private ArrayList<String> arraySpinnerGrupoAr;
-    private ArrayList<String> arraySpinnerModalidad;
+    private ArrayList<String> arraySpinnerTorneo;
+    private ArrayList<String> arraySpinnerFase;
 
     //SQLite Variables
     Connection con;
@@ -74,17 +75,18 @@ public class fourthFragment extends Fragment {
         grupo_a = (Spinner) view.findViewById(R.id.teamA);
         grupo_b = (Spinner) view.findViewById(R.id.teamB);
         fecha = (DatePicker) view.findViewById(R.id.date);
-        lugar_e = (Spinner) view.findViewById(R.id.place);
+        lugar_e = (EditText) view.findViewById(R.id.place);
         grupo_ar = (Spinner) view.findViewById(R.id.teamR);
-        modalidad = (Spinner) view.findViewById(R.id.modality);
+        torneo = (Spinner) view.findViewById(R.id.torneo);
+        fase = (Spinner) view.findViewById(R.id.fase);
         registerButton = (Button) view.findViewById(R.id.createMatch);
 
         // INICIALIZACION DE ARRAYS
         this.arraySpinnerGrupoA = new ArrayList<String>();
         this.arraySpinnerGrupoB = new ArrayList<String>();
-        this.arraySpinnerLugar = new ArrayList<String>();
         this.arraySpinnerGrupoAr = new ArrayList<String>();
-        this.arraySpinnerModalidad = new ArrayList<String>();
+        this.arraySpinnerTorneo = new ArrayList<String>();
+        this.arraySpinnerFase = new ArrayList<String>();
 
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,14 +98,12 @@ public class fourthFragment extends Fragment {
         });
         /* Agregar los retrieves */
         new retrieveGrupos().execute();
-        new retrieveModalidades().execute();
-        new retrieveLugar().execute();
+        new retrieveTorneos().execute();
+        new retrieveFases().execute();
         /*
-
-
-
         */
     }
+
     class retrieveGrupos extends AsyncTask<Void, Void, ArrayList<classGrupo> > {
         @Override
         protected void onPreExecute() {
@@ -117,7 +117,12 @@ public class fourthFragment extends Fragment {
             String UserName = "tallerprogra";
             String Password = "navia2016 ";
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String cadena = "select * from GFA_GRUPO order by idgrupo";
+            String cadena = "select distinct a.idgrupo, a.nombre, a.pais, d.tipo " +
+                    "from gfa_grupo a, gfa_pergrupo b, gfa_persona c, gfa_t_persona d " +
+                    "where a.idgrupo = b.idgrupo " +
+                    "and b.idpersona = c.idpersona " +
+                    "and c.idtipopersona = d.idtipopersona " +
+                    "order by a.idgrupo";
             ArrayList<classGrupo> grupos = new ArrayList<classGrupo>();
             try{
                 Class.forName(driver).newInstance();
@@ -125,8 +130,8 @@ public class fourthFragment extends Fragment {
                 Statement st = con.createStatement();
                 ResultSet resultado = st.executeQuery(cadena);
                 while(resultado.next()){
-                    Log.e("OK", resultado.getInt("IDGRUPO") + " - "+ resultado.getString("nombre_grupo"));
-                    classGrupo grupo = new classGrupo(resultado.getInt("IDGRUPO"), resultado.getString("nombre_grupo"));
+                    Log.e("OK", resultado.getInt("IDGRUPO") + " - "+ resultado.getString("nombre"));
+                    classGrupo grupo = new classGrupo(resultado.getInt("IDGRUPO"), resultado.getString("nombre"), resultado.getString("Pais"), resultado.getString("Tipo"));
                     //this.arraySpinnerCountry.add(resultado.getString("IDPAIS")+"."+resultado.getString("PAIS"));
                     grupos.add(grupo);
                 }
@@ -144,9 +149,13 @@ public class fourthFragment extends Fragment {
         protected void onPostExecute(ArrayList<classGrupo> result) {
             for(int i=0 ; i<result.size(); i++){
                 Log.e("Con for", result.get(i).getIdGrupo()+"");
-                arraySpinnerGrupoA.add(result.get(i).getIdGrupo()+"."+result.get(i).getGrupo());
-                arraySpinnerGrupoB.add(result.get(i).getIdGrupo()+"."+result.get(i).getGrupo());
-                arraySpinnerGrupoAr.add(result.get(i).getIdGrupo()+"."+result.get(i).getGrupo());
+                if(result.get(i).getTipo().equals("Jugador")){
+                    arraySpinnerGrupoA.add(result.get(i).getIdGrupo()+"."+result.get(i).getGrupo());
+                    arraySpinnerGrupoB.add(result.get(i).getIdGrupo()+"."+result.get(i).getGrupo());
+                }
+                if(result.get(i).getTipo().equals("Arbitro")){
+                    arraySpinnerGrupoAr.add(result.get(i).getIdGrupo()+"."+result.get(i).getGrupo());
+                }
             }
             ArrayAdapter<String> teamAAdapter = new ArrayAdapter<String>(getActivity(),
                     android.R.layout.simple_spinner_item, arraySpinnerGrupoA);
@@ -161,31 +170,32 @@ public class fourthFragment extends Fragment {
             grupo_ar.setAdapter(teamArbAdapter);
         }
     }
-    class retrieveModalidades extends AsyncTask<Void, Void, ArrayList<classModalidad> > {
+
+    class retrieveTorneos extends AsyncTask<Void, Void, ArrayList<classTorneo> > {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
         @Override
-        protected ArrayList<classModalidad> doInBackground(Void... params) {
+        protected ArrayList<classTorneo> doInBackground(Void... params) {
             String result = "";
             String driver = "oracle.jdbc.driver.OracleDriver";
             String UserName = "tallerprogra";
             String Password = "navia2016 ";
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String cadena = "select * from GFA_modalidad order by idmodalidad";
-            ArrayList<classModalidad> modalidades = new ArrayList<classModalidad>();
+            String cadena = "select * from GFA_TORNEO order by idtorneo";
+            ArrayList<classTorneo> torneos = new ArrayList<classTorneo>();
             try{
                 Class.forName(driver).newInstance();
                 con = DriverManager.getConnection(sourceURL,UserName, Password);
                 Statement st = con.createStatement();
                 ResultSet resultado = st.executeQuery(cadena);
                 while(resultado.next()){
-                    Log.e("OK", resultado.getInt("IDMODALIDAD") + " - "+ resultado.getString("MODALIDAD"));
-                    classModalidad modalidad = new classModalidad(resultado.getInt("IDMODALIDAD"), resultado.getString("MODALIDAD"));
+                    Log.e("OK", resultado.getInt("IDTORNEO") + " - "+ resultado.getString("PAIS"));
+                    classTorneo torneo = new classTorneo(resultado.getInt("IDTORNEO"), resultado.getString("PAIS"));
                     //this.arraySpinnerCountry.add(resultado.getString("IDPAIS")+"."+resultado.getString("PAIS"));
-                    modalidades.add(modalidad);
+                    torneos.add(torneo);
                 }
                 resultado.close();
                 st.close();
@@ -195,45 +205,45 @@ public class fourthFragment extends Fragment {
                 Log.e("ERROR", e.toString());
                 result = "";
             }
-            return modalidades;
+            return torneos;
         }
 
-        protected void onPostExecute(ArrayList<classModalidad> result) {
+        protected void onPostExecute(ArrayList<classTorneo> result) {
             for(int i=0 ; i<result.size(); i++){
-                Log.e("Con for", result.get(i).getIdModalidad()+"");
-                arraySpinnerModalidad.add(result.get(i).getIdModalidad()+"."+result.get(i).getModalidad());
+                Log.e("Con for", result.get(i).getIdTorneo()+"");
+                arraySpinnerTorneo.add(result.get(i).getIdTorneo()+"."+result.get(i).getPais());
             }
-            ArrayAdapter<String> modalidades = new ArrayAdapter<String>(getActivity(),
-                    android.R.layout.simple_spinner_item, arraySpinnerModalidad);
-            modalidad.setAdapter(modalidades);
+            ArrayAdapter<String> torneos = new ArrayAdapter<String>(getActivity(),
+                    android.R.layout.simple_spinner_item, arraySpinnerTorneo);
+            torneo.setAdapter(torneos);
 
         }
     }
-    class retrieveLugar extends AsyncTask<Void, Void, ArrayList<classLugar> > {
+    class retrieveFases extends AsyncTask<Void, Void, ArrayList<classFase> > {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
 
         @Override
-        protected ArrayList<classLugar> doInBackground(Void... params) {
+        protected ArrayList<classFase> doInBackground(Void... params) {
             String result = "";
             String driver = "oracle.jdbc.driver.OracleDriver";
             String UserName = "tallerprogra";
             String Password = "navia2016 ";
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String cadena = "select * from GFA_LUGARENC order by idlugarencuentro";
-            ArrayList<classLugar> lugares = new ArrayList<classLugar>();
+            String cadena = "select * from GFA_FASE order by idfase";
+            ArrayList<classFase> fases = new ArrayList<classFase>();
             try{
                 Class.forName(driver).newInstance();
                 con = DriverManager.getConnection(sourceURL,UserName, Password);
                 Statement st = con.createStatement();
                 ResultSet resultado = st.executeQuery(cadena);
                 while(resultado.next()){
-                    Log.e("OK", resultado.getInt("IDLUGARENCUENTRO") + " - "+ resultado.getString("LUGAR"));
-                    classLugar lugar = new classLugar(resultado.getInt("IDLUGARENCUENTRO"), resultado.getString("LUGAR"));
+                    Log.e("OK", resultado.getInt("IDFASE") + " - "+ resultado.getString("FASE"));
+                    classFase fase = new classFase(resultado.getInt("IDFASE"), resultado.getString("FASE"));
                     //this.arraySpinnerCountry.add(resultado.getString("IDPAIS")+"."+resultado.getString("PAIS"));
-                    lugares.add(lugar);
+                    fases.add(fase);
                 }
                 resultado.close();
                 st.close();
@@ -243,20 +253,17 @@ public class fourthFragment extends Fragment {
                 Log.e("ERROR", e.toString());
                 result = "";
             }
-            return lugares;
+            return fases;
         }
 
-        protected void onPostExecute(ArrayList<classLugar> result) {
-            try {
-                for (int i = 0; i < result.size(); i++) {
-                    Log.e("Con for", result.get(i).getIdLugar() + "");
-                    arraySpinnerLugar.add(result.get(i).getIdLugar() + "." + result.get(i).getLugar());
-                }
-                ArrayAdapter<String> lugares = new ArrayAdapter<String>(getActivity(),
-                        android.R.layout.simple_spinner_item, arraySpinnerLugar);
-                lugar_e.setAdapter(lugares);
-            }catch (Exception e){}
-
+        protected void onPostExecute(ArrayList<classFase> result) {
+            for(int i=0 ; i<result.size(); i++){
+                Log.e("Con for", result.get(i).getIdFase()+"");
+                arraySpinnerFase.add(result.get(i).getIdFase()+"."+result.get(i).getFase());
+            }
+            ArrayAdapter<String> fases = new ArrayAdapter<String>(getActivity(),
+                    android.R.layout.simple_spinner_item, arraySpinnerFase);
+            fase.setAdapter(fases);
         }
     }
     class addMatch extends AsyncTask<Void, Void, String > {
@@ -268,36 +275,41 @@ public class fourthFragment extends Fragment {
         @Override
         protected String doInBackground(Void... params) {
             //Splits
-            String[] idLugarEncuentroSplit = lugar_e.getSelectedItem().toString().split("\\.");
             String[] idGrupoASplit = grupo_a.getSelectedItem().toString().split("\\.");
             String[] idGrupoBSplit = grupo_b.getSelectedItem().toString().split("\\.");
             String[] idGrupoArSplit = grupo_ar.getSelectedItem().toString().split("\\.");
-            String[] idTorneoModSplit = modalidad.getSelectedItem().toString().split("\\.");
+            String[] idTorneoSplit = torneo.getSelectedItem().toString().split("\\.");
+            String[] idFaseSplit = fase.getSelectedItem().toString().split("\\.");
 
             // parametros
             String resultadoA = "-1";
             String resultadoB = "-1";
-            String fecha = "11/NOV/2016";
-            String idLugarEncuentro = idLugarEncuentroSplit[0].toString();
+            int day = fecha.getDayOfMonth();
+            int month = fecha.getMonth() + 1;
+            int year = fecha.getYear();
+            String dateMatch =day+"/"+month+"/"+year;
+            String idLugarEncuentro = lugar_e.getText().toString();
             String idGrupoA = idGrupoASplit[0].toString();
             String idGrupoB = idGrupoBSplit[0].toString();
             String idGrupoArbitro = idGrupoArSplit[0].toString();
-            String idTorneoMod = idTorneoModSplit[0].toString();
+            String idTorneo = idTorneoSplit[0].toString();
+            String idFase = idFaseSplit[0].toString();
 
             String result = "";
             String driver = "oracle.jdbc.driver.OracleDriver";
             String UserName = "tallerprogra";
             String Password = "navia2016 ";
             String sourceURL = "jdbc:oracle:thin:@200.105.212.50:1521:xe";
-            String cadena = "insert into GFA_PARTIDO(resultado_a, resultado_b, fecha, idlugarencuentro, idgrupo1, idgrupo2, idarbitros, idtorneomod) VALUES('"+
+            String cadena = "insert into GFA_PARTIDO(resultado_a, resultado_b, fecha, lugar, idgrupoa, idgrupob, idgrupoar, idtorneo, idfase) VALUES('"+
                     resultadoA+"' ,"+
                     "'"+resultadoB+"' ,"+
-                    "TO_DATE('2003/05/03 21:02:44', 'yyyy/mm/dd hh24:mi:ss') ,"+
+                    "to_date('"+dateMatch+"','dd/mm/yyyy') ,"+
                     "'"+idLugarEncuentro+"' ,"+
                     "'"+idGrupoA+"' ,"+
                     "'"+idGrupoB+"' ,"+
                     "'"+idGrupoArbitro+"' ,"+
-                    "'"+idTorneoMod+"')";
+                    "'"+idTorneo+"' ,"+
+                    "'"+idFase+"')";
             System.out.println(cadena);
             try{
                 Class.forName(driver).newInstance();

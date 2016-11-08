@@ -64,5 +64,7 @@
     <string name="form_place"> Lugar de encuentro </string>
     <string name="form_team_referee"> Grupo Arbitros </string>
     <string name="form_modality"> Modalidad </string>
+    <string name="form_torneo"> Torneo </string>
+    <string name="form_fase"> Fase </string>
 
 </resources>
